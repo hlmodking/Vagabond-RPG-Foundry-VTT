@@ -9,7 +9,8 @@
   },
   "authors": [
     {
-      "name": "Your Name",
+      "name": "gordunkrpg",
+      "url": "https://github.com/gordunkrpg",
       "flags": {}
     }
   ],
@@ -46,11 +47,11 @@
   "gridUnits": "ft",
   "primaryTokenAttribute": "hp",
   "secondaryTokenAttribute": "mana",
-  "url": "https://github.com/yourusername/vagabond-foundry",
-  "manifest": "https://github.com/yourusername/vagabond-foundry/releases/latest/download/system.json",
-  "download": "https://github.com/yourusername/vagabond-foundry/releases/latest/download/vagabond.zip",
+  "url": "https://github.com/gordunkrpg/Vagabond-RPG-Foundry-VTT",
+  "manifest": "https://github.com/gordunkrpg/Vagabond-RPG-Foundry-VTT/releases/latest/download/system.json",
+  "download": "https://github.com/gordunkrpg/Vagabond-RPG-Foundry-VTT/releases/latest/download/vagabond.zip",
   "license": "LICENSE",
   "readme": "README.md",
-  "bugs": "https://github.com/yourusername/vagabond-foundry/issues",
+  "bugs": "https://github.com/gordunkrpg/Vagabond-RPG-Foundry-VTT/issues",
   "changelog": "CHANGELOG.md"
 }
