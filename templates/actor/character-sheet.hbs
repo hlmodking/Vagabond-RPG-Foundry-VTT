@@ -1,0 +1,250 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <img class="profile" src="{{actor.img}}" data-action="showImage" title="{{actor.name}}" alt="{{actor.name}}"/>
+
+    <div class="header-details flexcol">
+      <h1 class="charname">
+        <input name="name" type="text" value="{{actor.name}}" placeholder="Character Name"/>
+      </h1>
+
+      <div class="header-fields flexrow">
+        <div class="header-field">
+          <label>Ancestry</label>
+          <input type="text" name="system.ancestry" value="{{system.ancestry}}" placeholder="Ancestry"/>
+        </div>
+
+        <div class="header-field">
+          <label>Class</label>
+          <input type="text" name="system.class" value="{{system.class}}" placeholder="Class"/>
+        </div>
+
+        <div class="header-field">
+          <label>Level</label>
+          <input type="number" name="system.level" value="{{system.level}}" data-dtype="Number" min="1"/>
+        </div>
+
+        <div class="header-field">
+          <label>XP</label>
+          <input type="number" name="system.xp" value="{{system.xp}}" data-dtype="Number" min="0"/>
+        </div>
+      </div>
+
+      <div class="resources flexrow">
+        <div class="resource hp">
+          <label>HP</label>
+          <input type="number" name="system.hp.value" value="{{system.hp.value}}" data-dtype="Number" min="0"/>
+          <span class="sep">/</span>
+          <span class="max">{{system.hp.max}}</span>
+        </div>
+
+        <div class="resource luck">
+          <label>Luck</label>
+          <input type="number" name="system.luck.value" value="{{system.luck.value}}" data-dtype="Number" min="0"/>
+          <span class="sep">/</span>
+          <span class="max">{{system.luck.max}}</span>
+        </div>
+
+        {{#if system.mana.max}}
+        <div class="resource mana">
+          <label>Mana</label>
+          <input type="number" name="system.mana.value" value="{{system.mana.value}}" data-dtype="Number" min="0"/>
+          <span class="sep">/</span>
+          <span class="max">{{system.mana.max}}</span>
+        </div>
+        {{/if}}
+
+        <div class="resource">
+          <label>Fatigue</label>
+          <input type="number" name="system.fatigue" value="{{system.fatigue}}" data-dtype="Number" min="0" max="5"/>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  {{!-- Sheet Navigation Tabs --}}
+  <nav class="sheet-navigation tabs" data-group="primary">
+    <a class="item{{#if (eq tabGroups.primary "stats")}} active{{/if}}" data-tab="stats">Stats</a>
+    <a class="item{{#if (eq tabGroups.primary "skills")}} active{{/if}}" data-tab="skills">Skills</a>
+    <a class="item{{#if (eq tabGroups.primary "inventory")}} active{{/if}}" data-tab="inventory">Inventory</a>
+    <a class="item{{#if (eq tabGroups.primary "biography")}} active{{/if}}" data-tab="biography">Biography</a>
+  </nav>
+
+  {{!-- Sheet Body - ALL TABS RENDERED, VISIBILITY CONTROLLED BY CSS --}}
+  <section class="sheet-body">
+
+    {{!-- Stats Tab --}}
+    <div class="tab{{#if (eq tabGroups.primary "stats")}} active{{/if}}" data-tab="stats">
+      <h2>Stats</h2>
+
+      <div class="stats-grid">
+        <div class="stat" data-stat="might">
+          <label>Might</label>
+          <input type="number" name="system.stats.might.value" value="{{system.stats.might.value}}" data-dtype="Number" min="2" max="7"/>
+        </div>
+
+        <div class="stat" data-stat="dexterity">
+          <label>Dexterity</label>
+          <input type="number" name="system.stats.dexterity.value" value="{{system.stats.dexterity.value}}" data-dtype="Number" min="2" max="7"/>
+        </div>
+
+        <div class="stat" data-stat="awareness">
+          <label>Awareness</label>
+          <input type="number" name="system.stats.awareness.value" value="{{system.stats.awareness.value}}" data-dtype="Number" min="2" max="7"/>
+        </div>
+
+        <div class="stat" data-stat="reason">
+          <label>Reason</label>
+          <input type="number" name="system.stats.reason.value" value="{{system.stats.reason.value}}" data-dtype="Number" min="2" max="7"/>
+        </div>
+
+        <div class="stat" data-stat="presence">
+          <label>Presence</label>
+          <input type="number" name="system.stats.presence.value" value="{{system.stats.presence.value}}" data-dtype="Number" min="2" max="7"/>
+        </div>
+
+        <div class="stat" data-stat="luck">
+          <label>Luck</label>
+          <input type="number" name="system.stats.luck.value" value="{{system.stats.luck.value}}" data-dtype="Number" min="2" max="7"/>
+        </div>
+      </div>
+
+      <h3>Saves</h3>
+      <div class="saves-grid">
+        <div class="save">
+          <label>Endure</label>
+          <div class="difficulty">{{system.saves.endure.value}}</div>
+          <button type="button" data-action="rollCheck" data-check-type="save" data-check-key="endure">
+            <i class="fas fa-dice-d20"></i> Roll
+          </button>
+        </div>
+
+        <div class="save">
+          <label>Reflex</label>
+          <div class="difficulty">{{system.saves.reflex.value}}</div>
+          <button type="button" data-action="rollCheck" data-check-type="save" data-check-key="reflex">
+            <i class="fas fa-dice-d20"></i> Roll
+          </button>
+        </div>
+
+        <div class="save">
+          <label>Will</label>
+          <div class="difficulty">{{system.saves.will.value}}</div>
+          <button type="button" data-action="rollCheck" data-check-type="save" data-check-key="will">
+            <i class="fas fa-dice-d20"></i> Roll
+          </button>
+        </div>
+      </div>
+
+      <h3>Speed & Movement</h3>
+      <div class="flexrow">
+        <div class="resource">
+          <label>Speed</label>
+          <span class="max">{{system.speed.base}} ft</span>
+        </div>
+        <div class="resource">
+          <label>Crawl</label>
+          <span class="max">{{system.speed.crawl}} ft</span>
+        </div>
+        <div class="resource">
+          <label>Travel</label>
+          <span class="max">{{system.speed.travel}} mi</span>
+        </div>
+      </div>
+    </div>
+
+    {{!-- Skills Tab --}}
+    <div class="tab{{#if (eq tabGroups.primary "skills")}} active{{/if}}" data-tab="skills">
+      <h2>Skills</h2>
+
+      <div class="skills-list">
+        {{#each system.skills as |skill key|}}
+        <div class="skill{{#if skill.trained}} trained{{/if}}">
+          <label>{{key}}</label>
+
+          <span class="stat-abbr">{{skill.stat}}</span>
+
+          <div class="trained-toggle">
+            <input type="checkbox" name="system.skills.{{key}}.trained" {{checked skill.trained}}/>
+            <label>Trained</label>
+          </div>
+
+          <div class="difficulty">Difficulty</div>
+
+          <button type="button" data-action="rollCheck" data-check-type="skill" data-check-key="{{key}}">
+            <i class="fas fa-dice-d20"></i>
+          </button>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+
+    {{!-- Inventory Tab --}}
+    <div class="tab{{#if (eq tabGroups.primary "inventory")}} active{{/if}}" data-tab="inventory">
+      <h2>Inventory</h2>
+
+      <div class="inventory-slots">
+        <label>Inventory Slots</label>
+        <div class="slots-bar">
+          <span class="slots-text">{{system.slots.used}} / {{system.slots.max}}</span>
+        </div>
+      </div>
+
+      <h3>Items</h3>
+      <p>Drag items here from the Items tab or create new items.</p>
+
+      {{#if items.weapons}}
+      <h4>Weapons</h4>
+      <div class="items-list">
+        {{#each items.weapons as |item|}}
+        <div class="item{{#if item.system.equipped}} equipped{{/if}}" data-item-id="{{item._id}}" draggable="true">
+          <div class="item-name" data-action="editItem">
+            <span>{{item.name}}</span>
+          </div>
+          <div>{{item.system.damage.die}}</div>
+          <div>{{item.system.range}}</div>
+          <div class="item-controls">
+            <button type="button" class="item-control equip" data-action="toggleEquipped" title="Equip/Unequip">
+              <i class="fas {{#if item.system.equipped}}fa-check-circle{{else}}fa-circle{{/if}}"></i>
+            </button>
+            <button type="button" class="item-control delete" data-action="deleteItem" title="Delete">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+      {{/if}}
+
+      {{#if items.gear}}
+      <h4>Gear</h4>
+      <div class="items-list">
+        {{#each items.gear as |item|}}
+        <div class="item" data-item-id="{{item._id}}" draggable="true">
+          <div class="item-name" data-action="editItem">
+            <span>{{item.name}}</span>
+          </div>
+          <div>Slots: {{item.system.slots}}</div>
+          <div class="item-controls">
+            <button type="button" class="item-control delete" data-action="deleteItem" title="Delete">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+      {{/if}}
+    </div>
+
+    {{!-- Biography Tab --}}
+    <div class="tab{{#if (eq tabGroups.primary "biography")}} active{{/if}}" data-tab="biography">
+      <h2>Biography</h2>
+
+      <div class="editor">
+        {{editor enrichedBiography target="system.biography" button=true editable=editable}}
+      </div>
+    </div>
+
+  </section>
+</form>
