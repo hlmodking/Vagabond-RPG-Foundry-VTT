@@ -1,0 +1,180 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+  
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <img class="profile" src="{{item.img}}" data-action="showImage" title="{{item.name}}" alt="{{item.name}}"/>
+    
+    <div class="header-details flexcol">
+      <h1 class="charname">
+        <input name="name" type="text" value="{{item.name}}" placeholder="Weapon Name"/>
+      </h1>
+      
+      <div class="item-subtitle">
+        <i class="fas fa-sword"></i> Weapon
+      </div>
+    </div>
+  </header>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+    
+    <h2>Weapon Properties</h2>
+    
+    <div class="form-group">
+      <label>Damage Die</label>
+      <select name="system.damage.die">
+        {{#select system.damage.die}}
+        <option value="d4">d4</option>
+        <option value="d6">d6</option>
+        <option value="d8">d8</option>
+        <option value="d10">d10</option>
+        <option value="d12">d12</option>
+        {{/select}}
+      </select>
+      <p class="hint">The base damage die for this weapon</p>
+    </div>
+    
+    <div class="form-group">
+      <label>Damage Bonus</label>
+      <input type="number" name="system.damage.bonus" value="{{system.damage.bonus}}" data-dtype="Number" min="0"/>
+      <p class="hint">Additional flat damage bonus (optional)</p>
+    </div>
+    
+    <div class="form-group">
+      <label>Range</label>
+      <select name="system.range">
+        {{#select system.range}}
+        <option value="close">Close (5ft)</option>
+        <option value="near">Near (30ft)</option>
+        <option value="far">Far (30ft+)</option>
+        {{/select}}
+      </select>
+      <p class="hint">The weapon's effective range</p>
+    </div>
+    
+    <div class="form-group">
+      <label>Grip</label>
+      <select name="system.grip">
+        {{#select system.grip}}
+        <option value="F">Fist</option>
+        <option value="1H">One-Handed</option>
+        <option value="V">Versatile</option>
+        <option value="2H">Two-Handed</option>
+        {{/select}}
+      </select>
+      <p class="hint">How the weapon is held</p>
+    </div>
+
+    <h3>Weapon Properties</h3>
+    <p class="hint">Select all properties that apply to this weapon</p>
+    
+    <div class="properties-grid">
+      <label class="property-checkbox">
+        <input type="checkbox" name="system.properties" value="brawl" {{checked (includes system.properties "brawl")}}/>
+        <span class="property-name">Brawl</span>
+        <span class="property-desc">Can use Brawl skill</span>
+      </label>
+      
+      <label class="property-checkbox">
+        <input type="checkbox" name="system.properties" value="brutal" {{checked (includes system.properties "brutal")}}/>
+        <span class="property-name">Brutal</span>
+        <span class="property-desc">Crits on 19-20</span>
+      </label>
+      
+      <label class="property-checkbox">
+        <input type="checkbox" name="system.properties" value="cleave" {{checked (includes system.properties "cleave")}}/>
+        <span class="property-name">Cleave</span>
+        <span class="property-desc">Hit adjacent foe on crit</span>
+      </label>
+      
+      <label class="property-checkbox">
+        <input type="checkbox" name="system.properties" value="entangle" {{checked (includes system.properties "entangle")}}/>
+        <span class="property-name">Entangle</span>
+        <span class="property-desc">Can restrain targets</span>
+      </label>
+      
+      <label class="property-checkbox">
+        <input type="checkbox" name="system.properties" value="finesse" {{checked (includes system.properties "finesse")}}/>
+        <span class="property-name">Finesse</span>
+        <span class="property-desc">Can use Finesse skill</span>
+      </label>
+      
+      <label class="property-checkbox">
+        <input type="checkbox" name="system.properties" value="keen" {{checked (includes system.properties "keen")}}/>
+        <span class="property-name">Keen</span>
+        <span class="property-desc">+1 damage on hit</span>
+      </label>
+      
+      <label class="property-checkbox">
+        <input type="checkbox" name="system.properties" value="long" {{checked (includes system.properties "long")}}/>
+        <span class="property-name">Long</span>
+        <span class="property-desc">10ft reach</span>
+      </label>
+      
+      <label class="property-checkbox">
+        <input type="checkbox" name="system.properties" value="near" {{checked (includes system.properties "near")}}/>
+        <span class="property-name">Near</span>
+        <span class="property-desc">Attacks at Near range</span>
+      </label>
+      
+      <label class="property-checkbox">
+        <input type="checkbox" name="system.properties" value="ranged" {{checked (includes system.properties "ranged")}}/>
+        <span class="property-name">Ranged</span>
+        <span class="property-desc">Can use Ranged skill</span>
+      </label>
+      
+      <label class="property-checkbox">
+        <input type="checkbox" name="system.properties" value="shield" {{checked (includes system.properties "shield")}}/>
+        <span class="property-name">Shield</span>
+        <span class="property-desc">+1 Armor when equipped</span>
+      </label>
+      
+      <label class="property-checkbox">
+        <input type="checkbox" name="system.properties" value="thrown" {{checked (includes system.properties "thrown")}}/>
+        <span class="property-name">Thrown</span>
+        <span class="property-desc">Can be thrown at Near range</span>
+      </label>
+    </div>
+    
+    <h3>Physical Properties</h3>
+    
+    <div class="form-row">
+      <div class="form-group">
+        <label>Inventory Slots</label>
+        <input type="number" name="system.slots" value="{{system.slots}}" data-dtype="Number" min="0" max="10"/>
+        <p class="hint">Number of inventory slots this weapon occupies</p>
+      </div>
+      
+      <div class="form-group">
+        <label>Quantity</label>
+        <input type="number" name="system.quantity" value="{{system.quantity}}" data-dtype="Number" min="1"/>
+        <p class="hint">How many of this weapon you have</p>
+      </div>
+    </div>
+    
+    <h3>Value</h3>
+    
+    <div class="form-row">
+      <div class="form-group">
+        <label>Gold</label>
+        <input type="number" name="system.price.gold" value="{{system.price.gold}}" data-dtype="Number" min="0"/>
+      </div>
+      
+      <div class="form-group">
+        <label>Silver</label>
+        <input type="number" name="system.price.silver" value="{{system.price.silver}}" data-dtype="Number" min="0"/>
+      </div>
+      
+      <div class="form-group">
+        <label>Copper</label>
+        <input type="number" name="system.price.copper" value="{{system.price.copper}}" data-dtype="Number" min="0"/>
+      </div>
+    </div>
+    
+    <h3>Description</h3>
+    <div class="editor">
+      {{editor enrichedDescription target="system.description" button=true editable=editable}}
+    </div>
+
+  </section>
+</form>

@@ -29,10 +29,15 @@ export class VagabondNPCSheet extends HandlebarsApplicationMixin(foundry.applica
         context.config = CONFIG.VAGABOND;
         context.editable = this.isEditable;
 
-        context.enrichedBiography = await foundry.applications.fields.enrichHTML(this.document.system.biography, {
-            secrets: this.document.isOwner,
-            relativeTo: this.document
-        });
+        // Enrich biography using correct v13 API
+        context.enrichedBiography = await foundry.applications.fields.HTMLField.enrichHTML(
+            this.document.system.biography || "", 
+            {
+                secrets: this.document.isOwner,
+                relativeTo: this.document,
+                async: true
+            }
+        );
 
         return context;
     }

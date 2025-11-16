@@ -132,10 +132,14 @@ async function preloadHandlebarsTemplates() {
     "systems/vagabond/templates/actor/npc-sheet.hbs",
 
     // Item Sheet templates
-    "systems/vagabond/templates/item/item-sheet.hbs"
+    "systems/vagabond/templates/item/item-sheet.hbs",
+    
+    // Chat templates
+    "systems/vagabond/templates/chat/check-result.hbs",
+    "systems/vagabond/templates/chat/spell-cast.hbs"
   ];
 
-  return foundry.applications.api.HandlebarsApplicationMixin.loadTemplates(templatePaths);
+  return loadTemplates(templatePaths);
 }
 
 /* -------------------------------------------- */
@@ -204,5 +208,24 @@ function registerHandlebarsHelpers() {
     const statValue = parseInt(stat) || 0;
     const multiplier = trained ? 2 : 1;
     return 20 - (statValue * multiplier);
+  });
+  
+  // Includes helper (for checking if array includes value)
+  Handlebars.registerHelper("includes", function(array, value) {
+    if (!Array.isArray(array)) return false;
+    return array.includes(value);
+  });
+  
+  // Checked helper (for checkbox states)
+  Handlebars.registerHelper("checked", function(value) {
+    return value ? "checked" : "";
+  });
+  
+  // Select helper (for select dropdowns)
+  Handlebars.registerHelper("select", function(selected, options) {
+    const escapedValue = RegExp.escape(Handlebars.escapeExpression(selected));
+    const rgx = new RegExp(' value=\"' + escapedValue + '\"');
+    const html = options.fn(this);
+    return html.replace(rgx, "$& selected");
   });
 }

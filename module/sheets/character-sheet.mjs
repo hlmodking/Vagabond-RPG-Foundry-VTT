@@ -111,11 +111,15 @@ export class VagabondCharacterSheet extends HandlebarsApplicationMixin(foundry.a
 
     context.tabGroups = this.tabGroups;
 
-    // Add enriched biography
-    context.enrichedBiography = await foundry.applications.ux.TextEditor.enrichHTML(systemData.biography, {
-      secrets: this.document.isOwner,
-      relativeTo: this.document
-    });
+    // Add enriched biography using correct v13 API
+    context.enrichedBiography = await foundry.applications.fields.HTMLField.enrichHTML(
+      systemData.biography || "", 
+      {
+        secrets: this.document.isOwner,
+        relativeTo: this.document,
+        async: true
+      }
+    );
 
     return context;
   }
@@ -254,27 +258,32 @@ export class VagabondCharacterSheet extends HandlebarsApplicationMixin(foundry.a
 
     const actor = this.document;
 
-    const buttons = {
-      normal: {
+    const buttons = [
+      {
+        action: "normal",
         label: game.i18n.localize("VAGABOND.Roll.Normal"),
         callback: () => actor.rollCheck(checkType, checkKey, {})
       },
-      favor: {
+      {
+        action: "favor",
         label: game.i18n.localize("VAGABOND.Roll.Favored"),
         callback: () => actor.rollCheck(checkType, checkKey, { favor: true })
       },
-      hinder: {
+      {
+        action: "hinder",
         label: game.i18n.localize("VAGABOND.Roll.Hindered"),
         callback: () => actor.rollCheck(checkType, checkKey, { hinder: true })
       }
-    };
+    ];
 
-    new Dialog({
-      title: game.i18n.localize("VAGABOND.Roll.Title"),
+    foundry.applications.api.DialogV2.prompt({
+      window: {
+        title: game.i18n.localize("VAGABOND.Roll.Title")
+      },
       content: `<p>${game.i18n.localize("VAGABOND.Roll.Prompt")}</p>`,
       buttons,
       default: "normal"
-    }).render(true);
+    });
   }
 
   /**
@@ -324,9 +333,13 @@ export class VagabondCharacterSheet extends HandlebarsApplicationMixin(foundry.a
     const item = this.document.items.get(itemId);
     if (!item) return;
 
-    const confirmed = await Dialog.confirm({
-      title: game.i18n.format("VAGABOND.DeleteItem", { name: item.name }),
-      content: `<p>${game.i18n.localize("VAGABOND.DeleteItemConfirm")}</p>`
+    const confirmed = await foundry.applications.api.DialogV2.confirm({
+      window: {
+        title: game.i18n.format("VAGABOND.DeleteItem", { name: item.name })
+      },
+      content: `<p>${game.i18n.localize("VAGABOND.DeleteItemConfirm")}</p>`,
+      rejectClose: false,
+      modal: true
     });
 
     if (confirmed) {

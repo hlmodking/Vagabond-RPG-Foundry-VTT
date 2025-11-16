@@ -139,8 +139,7 @@ export class VagabondItem extends Item {
     const messageData = {
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
       flavor: `${this.name} - ${game.i18n.localize("VAGABOND.Combat.Damage")}`,
-      rolls: [roll],
-      type: CONST.CHAT_MESSAGE_TYPES.ROLL
+      rolls: [roll]
     };
 
     // Apply weapon properties
@@ -200,7 +199,7 @@ export class VagabondItem extends Item {
     const messageData = {
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
       flavor: `${this.name} - ${game.i18n.localize("VAGABOND.Magic.Cast")}`,
-      content: await renderTemplate("systems/vagabond/templates/chat/spell-cast.hbs", {
+      content: await foundry.applications.handlebars.renderTemplate("systems/vagabond/templates/chat/spell-cast.hbs", {
         spell: this,
         delivery: game.i18n.localize(CONFIG.VAGABOND.spellDeliveries[systemData.delivery].label),
         manaCost,
@@ -211,7 +210,6 @@ export class VagabondItem extends Item {
 
     if (damageRoll) {
       messageData.rolls = [damageRoll];
-      messageData.type = CONST.CHAT_MESSAGE_TYPES.ROLL;
     }
 
     await ChatMessage.create(messageData);

@@ -154,18 +154,20 @@ export class VagabondActor extends Actor {
       resultType = "pass";
     }
 
-    // Create chat message
+    // Create chat message - Let Foundry render the roll, we'll use flavor for our card
+    const cardHtml = await foundry.applications.handlebars.renderTemplate("systems/vagabond/templates/chat/check-result.hbs", {
+      difficulty,
+      total,
+      resultType,
+      isCrit: d20Result === 20,
+      label,
+      formula: roll.formula
+    });
+
     const messageData = {
       speaker: ChatMessage.getSpeaker({ actor: this }),
-      flavor: label,
-      rolls: [roll],
-      content: await renderTemplate("systems/vagabond/templates/chat/check-result.hbs", {
-        difficulty,
-        total,
-        resultType,
-        isCrit: d20Result === 20,
-        label
-      })
+      flavor: cardHtml,
+      rolls: [roll]
     };
 
     await ChatMessage.create(messageData);
