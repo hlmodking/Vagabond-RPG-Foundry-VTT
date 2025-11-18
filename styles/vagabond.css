@@ -1,986 +1,329 @@
 /**
- * Vagabond RPG System Styles
- * Using CSS Layers for Foundry v13 compatibility
- * Styled to match the Vagabond RPG book aesthetic
+ * Vagabond RPG System - No Custom Fonts Version
+ * Uses Foundry defaults for all fonts - just layout and colors
  */
 
-/* Import Google Fonts as fallbacks */
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Oswald:wght@400;600;700&display=swap');
+/* ==================== */
+/* CSS Variables        */
+/* ==================== */
 
-@layer vagabond {
+.vagabond {
+  /* Colors from Vagabond RPG book */
+  --color-primary: #2a2a2a;
+  --color-accent: #e8c547;
+  --color-text: #1a1a1a;
+  --color-text-light: #4a4a4a;
+  --color-bg: #ffffff;
+  --color-bg-light: #fafafa;
+  --color-border: #cccccc;
+  --color-danger: #b8463a;
   
-  /* ==================== */
-  /* CSS Variables        */
-  /* ==================== */
-  
-  .vagabond {
-    /* Colors from Vagabond RPG book interior */
-    --color-primary: #2a2a2a;          /* Dark charcoal */
-    --color-primary-dark: #1a1a1a;     /* Near black */
-    --color-secondary: #5a5a5a;        /* Medium gray */
-    --color-accent: #e8c547;           /* Bright yellow */
-    --color-text: #1a1a1a;             /* Black text */
-    --color-text-light: #4a4a4a;       /* Gray text */
-    --color-bg: #ffffff;               /* White */
-    --color-bg-light: #fafafa;         /* Off-white */
-    --color-bg-dark: #e8e8e8;          /* Light gray */
-    --color-border: #cccccc;           /* Light gray border */
-    --color-sidebar: #e8c547;          /* Yellow sidebar */
-    --color-success: #5a8c3a;          /* Green */
-    --color-warning: #e8c547;          /* Yellow */
-    --color-danger: #b8463a;           /* Red */
-    
-    --border-radius: 0;
-    --border-width: 2px;
-    --spacing-xs: 4px;
-    --spacing-sm: 8px;
-    --spacing-md: 12px;
-    --spacing-lg: 16px;
-    --spacing-xl: 24px;
-    
-    /* Fonts matching Vagabond RPG */
-    --font-primary: "Crimson Pro", Georgia, serif;
-    --font-headers: "Oswald", "Arial Black", "Impact", sans-serif;
-    --font-secondary: "Oswald", sans-serif;
-  }
-  
-  /* ==================== */
-  /* Base Sheet Styles    */
-  /* ==================== */
-  
-  .vagabond.sheet {
-    font-family: var(--font-primary);
-    color: var(--color-text);
-    background: var(--color-bg);
-    font-size: 14px;
-    line-height: 1.6;
-  }
-  
-  /* CRITICAL: Make the window content fill available space and enable scrolling */
-  .vagabond.sheet .window-content {
-    background: var(--color-bg);
-    padding: 0;
-    height: 100%;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-  }
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 24px;
+}
 
-  /* CRITICAL: Make the form fill the window-content and use flexbox */
-  .vagabond.sheet form {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-  
-  /* Sidebar accent (like the yellow sidebar in the book) */
-  .vagabond.sheet::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 40px;
-    background: var(--color-accent);
-    z-index: 0;
-    pointer-events: none;
-  }
-  
-  .vagabond.sheet .sheet-header,
-  .vagabond.sheet .sheet-body,
-  .vagabond.sheet .tabs {
-    position: relative;
-    z-index: 2;
-  }
-  
-  .vagabond.sheet h1,
-  .vagabond.sheet h2,
-  .vagabond.sheet h3,
-  .vagabond.sheet h4 {
-    font-family: var(--font-headers);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin: var(--spacing-lg) 0 var(--spacing-md) 0;
-    padding: var(--spacing-xs) var(--spacing-md);
-    border: none;
-  }
-  
-  .vagabond.sheet h1 { 
-    font-size: 24px;
-  }
-  
-  .vagabond.sheet h2 { 
-    font-size: 20px;
-    background: var(--color-primary);
-    color: white;
-    padding: var(--spacing-sm) var(--spacing-md);
-    margin-left: -60px;
-    padding-left: 60px;
-  }
-  
-  .vagabond.sheet h3 { 
-    font-size: 16px;
-    background: var(--color-secondary);
-    color: white;
-    padding: var(--spacing-sm) var(--spacing-md);
-  }
-  
-  .vagabond.sheet h4 { 
-    font-size: 14px;
-    color: var(--color-primary);
-  }
-  
-  /* ==================== */
-  /* Form Elements        */
-  /* ==================== */
-  
-  .vagabond.sheet input[type="text"],
-  .vagabond.sheet input[type="number"],
-  .vagabond.sheet textarea,
-  .vagabond.sheet select {
-    background: var(--color-bg-light);
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius);
-    padding: var(--spacing-xs) var(--spacing-sm);
-    color: var(--color-text);
-    font-family: var(--font-primary);
-  }
-  
-  .vagabond.sheet input[type="text"]:focus,
-  .vagabond.sheet input[type="number"]:focus,
-  .vagabond.sheet textarea:focus,
-  .vagabond.sheet select:focus {
-    outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 4px rgba(42, 42, 42, 0.3);
-  }
-  
-  .vagabond.sheet input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-  }
-  
-  .vagabond.sheet button {
-    background: var(--color-primary);
-    color: white;
-    border: none;
-    border-radius: 0;
-    padding: var(--spacing-sm) var(--spacing-lg);
-    cursor: pointer;
-    font-family: var(--font-headers);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: background 0.2s;
-  }
-  
-  .vagabond.sheet button:hover {
-    background: var(--color-accent);
-    color: var(--color-primary);
-  }
-  
-  .vagabond.sheet button:active {
-    transform: translateY(1px);
-  }
-  
-  .vagabond.sheet button.icon-only {
-    padding: var(--spacing-xs);
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  /* ==================== */
-  /* Sheet Header         */
-  /* ==================== */
-  
-  .vagabond .sheet-header {
-    display: flex;
-    gap: var(--spacing-lg);
-    padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-lg) 60px; /* Extra left padding for yellow bar */
-    background: var(--color-bg);
-    border-bottom: 4px solid var(--color-primary);
-    flex-shrink: 0; /* Prevent header from shrinking */
-  }
-  
-  .vagabond .profile {
-    width: 120px;
-    height: 120px;
-    border: 3px solid var(--color-primary);
-    border-radius: 0;
-    object-fit: cover;
-    cursor: pointer;
-    flex-shrink: 0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 0.2s;
-  }
-  
-  .vagabond .profile:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-  }
-  
-  .vagabond .header-details {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-md);
-  }
-  
-  .vagabond .header-details .charname {
-    margin: 0;
-    border: none;
-  }
-  
-  .vagabond .header-details .charname input {
-    font-size: 32px;
-    font-weight: 900;
-    font-family: var(--font-headers);
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    border: none;
-    background: transparent;
-    padding: 0;
-    color: var(--color-primary);
-  }
-  
-  .vagabond .header-fields {
-    display: flex;
-    gap: var(--spacing-md);
-    flex-wrap: wrap;
-  }
-  
-  .vagabond .header-field {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-xs);
-  }
-  
-  .vagabond .header-field label {
-    font-size: 11px;
-    font-weight: 600;
-    font-family: var(--font-headers);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--color-text-light);
-  }
-  
-  .vagabond .header-field input,
-  .vagabond .header-field select {
-    min-width: 100px;
-  }
-  
-  /* ==================== */
-  /* Resources            */
-  /* ==================== */
-  
-  .vagabond .resources {
-    display: flex;
-    gap: var(--spacing-lg);
-    flex-wrap: wrap;
-  }
-  
-  .vagabond .resource {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    padding: var(--spacing-sm) var(--spacing-md);
-    background: var(--color-bg-light);
-    border: 2px solid var(--color-border);
-    border-radius: var(--border-radius);
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
-  }
-  
-  .vagabond .resource label {
-    font-weight: 700;
-    font-size: 12px;
-    font-family: var(--font-headers);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--color-text-light);
-    min-width: 40px;
-  }
-  
-  .vagabond .resource input {
-    width: 50px;
-    text-align: center;
-    font-weight: 700;
-    font-size: 16px;
-    padding: var(--spacing-xs);
-  }
-  
-  .vagabond .resource .sep {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--color-text-light);
-  }
-  
-  .vagabond .resource .max {
-    font-weight: 700;
-    font-size: 16px;
-    color: var(--color-text-light);
-    min-width: 30px;
-    text-align: center;
-  }
-  
-  .vagabond .resource.hp {
-    border-color: var(--color-danger);
-  }
-  
-  .vagabond .resource.luck {
-    border-color: var(--color-primary);
-  }
-  
-  .vagabond .resource.mana {
-    border-color: #8b6bb7;
-  }
-  
-  /* ==================== */
-  /* Tabs                 */
-  /* ==================== */
-  
-  .vagabond .tabs {
-    display: flex;
-    gap: 2px;
-    background: var(--color-primary);
-    margin: 0;
-    padding: 0;
-    flex-shrink: 0; /* Prevent tabs from shrinking */
-  }
-  
-  .vagabond .tabs .item {
-    padding: var(--spacing-md) var(--spacing-lg);
-    font-weight: 700;
-    font-family: var(--font-headers);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    cursor: pointer;
-    border: none;
-    background: var(--color-secondary);
-    color: white;
-    transition: all 0.2s;
-  }
-  
-  .vagabond .tabs .item:hover {
-    background: var(--color-primary);
-  }
-  
-  .vagabond .tabs .item.active {
-    background: var(--color-accent);
-    color: var(--color-primary);
-  }
-  
-  /* ==================== */
-  /* Sheet Body           */
-  /* ==================== */
-  
-  /* CRITICAL: This is the scrollable area */
-  .vagabond .sheet-body {
-    padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-lg) 60px; /* Extra left padding for yellow bar */
-    overflow-y: auto; /* Enable vertical scrolling */
-    overflow-x: hidden; /* Prevent horizontal scrolling */
-    flex: 1 1 auto; /* Allow body to grow and shrink, taking remaining space */
-    min-height: 0; /* Critical for flex scrolling to work */
-    background: var(--color-bg);
-  }
-  
-  .vagabond .tab {
-    display: none;
-  }
-  
-  .vagabond .tab.active {
-    display: block;
-  }
-  
-  /* ==================== */
-  /* Stats Grid           */
-  /* ==================== */
-  
-  .vagabond .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--spacing-lg);
-    margin-bottom: var(--spacing-xl);
-  }
-  
-  .vagabond .stat {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: var(--spacing-md);
-    background: white;
-    border: 2px solid var(--color-primary);
-    border-radius: 0;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  
-  .vagabond .stat:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
-    border-color: var(--color-accent);
-  }
-  
-  .vagabond .stat label {
-    font-weight: 700;
-    font-family: var(--font-headers);
-    font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--color-primary);
-    margin-bottom: var(--spacing-sm);
-  }
-  
-  .vagabond .stat input {
-    width: 80px;
-    text-align: center;
-    font-size: 36px;
-    font-weight: 900;
-    font-family: var(--font-headers);
-    color: var(--color-primary);
-    border: 2px solid var(--color-border);
-    background: var(--color-bg-light);
-  }
-  
-  .vagabond .stat .modifier {
-    margin-top: var(--spacing-xs);
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--color-text-light);
-  }
-  
-  /* ==================== */
-  /* Saves                */
-  /* ==================== */
-  
-  .vagabond .saves-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--spacing-md);
-    margin-bottom: var(--spacing-xl);
-  }
-  
-  .vagabond .save {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: var(--spacing-md);
-    background: var(--color-bg-light);
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius);
-  }
-  
-  .vagabond .save label {
-    font-weight: 700;
-    text-transform: uppercase;
-    font-size: 13px;
-    color: var(--color-text-light);
-    margin-bottom: var(--spacing-xs);
-  }
-  
-  .vagabond .save .difficulty {
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--color-primary-dark);
-  }
-  
-  .vagabond .save button {
-    margin-top: var(--spacing-sm);
-    width: 100%;
-  }
-  
-  /* ==================== */
-  /* Skills List          */
-  /* ==================== */
-  
-  .vagabond .skills-list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-xs);
-  }
-  
-  .vagabond .skill {
-    display: grid;
-    grid-template-columns: 1fr auto auto auto auto;
-    align-items: center;
-    gap: var(--spacing-md);
-    padding: var(--spacing-sm) var(--spacing-md);
-    background: var(--color-bg-light);
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius);
-    transition: background 0.2s;
-  }
-  
-  .vagabond .skill:hover {
-    background: white;
-  }
-  
-  .vagabond .skill.trained {
-    background: rgba(232, 197, 71, 0.1);
-    border-color: var(--color-accent);
-  }
-  
-  .vagabond .skill label {
-    font-weight: 600;
-    color: var(--color-text);
-    text-transform: capitalize;
-  }
-  
-  .vagabond .skill .stat-abbr {
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    color: var(--color-text-light);
-    padding: 2px 6px;
-    background: var(--color-bg-dark);
-    border-radius: 3px;
-  }
-  
-  .vagabond .skill .trained-toggle {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-xs);
-    font-size: 11px;
-    text-transform: uppercase;
-    color: var(--color-text-light);
-  }
-  
-  .vagabond .skill .difficulty {
-    font-weight: 700;
-    font-size: 18px;
-    color: var(--color-primary-dark);
-    min-width: 30px;
-    text-align: center;
-  }
-  
-  .vagabond .skill button {
-    padding: var(--spacing-xs) var(--spacing-sm);
-  }
-  
-  /* ==================== */
-  /* Items List           */
-  /* ==================== */
-  
-  .vagabond .items-header {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr auto auto;
-    gap: var(--spacing-sm);
-    padding: var(--spacing-sm) var(--spacing-md);
-    background: var(--color-primary);
-    color: white;
-    font-weight: 700;
-    font-family: var(--font-headers);
-    text-transform: uppercase;
-    font-size: 12px;
-    letter-spacing: 1px;
-    border-radius: 0;
-  }
-  
-  .vagabond .items-list {
-    border: 1px solid var(--color-border);
-    border-radius: 0 0 var(--border-radius) var(--border-radius);
-    margin-bottom: var(--spacing-lg);
-  }
-  
-  .vagabond .item {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr auto;
-    gap: var(--spacing-sm);
-    align-items: center;
-    padding: var(--spacing-sm) var(--spacing-md);
-    border-bottom: 1px solid var(--color-border);
-    transition: background 0.2s;
-  }
-  
-  .vagabond .item:last-child {
-    border-bottom: none;
-  }
-  
-  .vagabond .item:hover {
-    background: var(--color-bg-light);
-  }
-  
-  .vagabond .item.equipped {
-    background: rgba(232, 197, 71, 0.05);
-  }
-  
-  .vagabond .item-name {
-    font-weight: 600;
-    color: var(--color-text);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-  }
-  
-  .vagabond .item-name:hover {
-    color: var(--color-primary);
-  }
-  
-  .vagabond .item-name img {
-    width: 32px;
-    height: 32px;
-    border: 1px solid var(--color-border);
-    border-radius: 3px;
-  }
-  
-  .vagabond .item-controls {
-    display: flex;
-    gap: var(--spacing-xs);
-  }
-  
-  .vagabond .item-control {
-    width: 28px;
-    height: 28px;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-  }
-  
-  .vagabond .item-control.equip {
-    background: var(--color-secondary);
-  }
-  
-  .vagabond .item-control.edit {
-    background: var(--color-accent);
-  }
-  
-  .vagabond .item-control.delete {
-    background: var(--color-danger);
-  }
-  
-  /* ==================== */
-  /* Inventory Slots      */
-  /* ==================== */
-  
-  .vagabond .inventory-slots {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-md);
-    padding: var(--spacing-md);
-    background: var(--color-bg-light);
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius);
-    margin-bottom: var(--spacing-lg);
-  }
-  
-  .vagabond .inventory-slots label {
-    font-weight: 700;
-    text-transform: uppercase;
-    font-size: 13px;
-    color: var(--color-text-light);
-  }
-  
-  .vagabond .slots-bar {
-    flex: 1;
-    height: 24px;
-    background: white;
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius);
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .vagabond .slots-bar-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--color-success) 0%, var(--color-warning) 80%, var(--color-danger) 100%);
-    transition: width 0.3s;
-  }
-  
-  .vagabond .slots-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-weight: 700;
-    font-size: 12px;
-    color: var(--color-text);
-    text-shadow: 0 0 3px white;
-  }
-  
-  /* ==================== */
-  /* Spells List          */
-  /* ==================== */
-  
-  .vagabond .spell {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr auto auto;
-    gap: var(--spacing-sm);
-    align-items: center;
-    padding: var(--spacing-md);
-    background: var(--color-bg-light);
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius);
-    margin-bottom: var(--spacing-sm);
-  }
-  
-  .vagabond .spell-name {
-    font-weight: 600;
-    color: var(--color-text);
-    cursor: pointer;
-  }
-  
-  .vagabond .spell-name:hover {
-    color: #6b4ba1;
-  }
-  
-  .vagabond .spell-delivery {
-    font-size: 12px;
-    color: var(--color-text-light);
-  }
-  
-  .vagabond .spell-cost {
-    font-weight: 700;
-    color: #6b4ba1;
-  }
-  
-  /* ==================== */
-  /* Editor               */
-  /* ==================== */
-  
-  .vagabond .editor {
-    min-height: 300px;
-  }
-  
-  .vagabond .editor-content {
-    padding: var(--spacing-md);
-    background: white;
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius);
-    min-height: 300px;
-  }
-  
-  /* ==================== */
-  /* Roll Results         */
-  /* ==================== */
-  
-  .vagabond .roll-result {
-    padding: var(--spacing-md);
-    border-radius: var(--border-radius);
-    margin: var(--spacing-sm) 0;
-  }
-  
-  .vagabond .roll-result.crit {
-    background: rgba(90, 140, 58, 0.1);
-    border: 2px solid var(--color-success);
-  }
-  
-  .vagabond .roll-result.pass {
-    background: rgba(232, 197, 71, 0.1);
-    border: 2px solid var(--color-accent);
-  }
-  
-  .vagabond .roll-result.fail {
-    background: rgba(184, 70, 58, 0.1);
-    border: 2px solid var(--color-danger);
-  }
-  
-  /* ==================== */
-  /* Utility Classes      */
-  /* ==================== */
-  
-  .vagabond .flexrow {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: var(--spacing-md);
-  }
-  
-  .vagabond .flexcol {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-md);
-  }
-  
-  .vagabond .flex-grow {
-    flex: 1;
-  }
-  
-  .vagabond .text-center {
-    text-align: center;
-  }
-  
-  .vagabond .text-right {
-    text-align: right;
-  }
-  
-  .vagabond .hidden {
-    display: none;
-  }
-  
-  /* ==================== */
-  /* Scrollbars           */
-  /* ==================== */
-  
-  .vagabond ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-  
-  .vagabond ::-webkit-scrollbar-track {
-    background: var(--color-bg-dark);
-  }
-  
-  .vagabond ::-webkit-scrollbar-thumb {
-    background: var(--color-border);
-    border-radius: 4px;
-  }
-  
-  .vagabond ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-primary);
-  }
+/* ==================== */
+/* Base Sheet Styles    */
+/* ==================== */
 
-  /* ==================== */
-  /* Responsive Tweaks    */
-  /* ==================== */
-  
-  /* For smaller windows, make stats grid 2 columns */
-  @media (max-width: 600px) {
-    .vagabond .stats-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
+.vagabond.sheet {
+  color: var(--color-text);
+  background: var(--color-bg);
+}
 
-  /* ==================== */
-  /* Armor Sheet Styles   */
-  /* ==================== */
-  
-  /* Armor stats in a 2-column grid */
-  .vagabond .armor-stats-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-lg);
-    margin-bottom: var(--spacing-xl);
-  }
-  
-  /* Armor type information cards */
-  .vagabond .armor-type-info {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--spacing-md);
-    margin-bottom: var(--spacing-xl);
-  }
-  
-  .vagabond .armor-type-card {
-    padding: var(--spacing-md);
-    border: 2px solid var(--color-border);
-    border-radius: var(--border-radius);
-    background: var(--color-bg-light);
-    transition: all 0.2s;
-  }
-  
-  .vagabond .armor-type-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .vagabond .armor-type-card.light {
-    border-color: var(--color-success);
-  }
-  
-  .vagabond .armor-type-card.light:hover {
-    background: rgba(90, 140, 58, 0.05);
-  }
-  
-  .vagabond .armor-type-card.medium {
-    border-color: var(--color-warning);
-  }
-  
-  .vagabond .armor-type-card.medium:hover {
-    background: rgba(232, 197, 71, 0.05);
-  }
-  
-  .vagabond .armor-type-card.heavy {
-    border-color: var(--color-danger);
-  }
-  
-  .vagabond .armor-type-card.heavy:hover {
-    background: rgba(184, 70, 58, 0.05);
-  }
-  
-  .vagabond .armor-type-card h4 {
-    font-family: var(--font-headers);
-    font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--color-primary);
-    margin: 0 0 var(--spacing-sm) 0;
-    padding: 0;
-    background: transparent;
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-xs);
-  }
-  
-  .vagabond .armor-type-card .armor-details {
-    display: flex;
-    gap: var(--spacing-md);
-    margin-bottom: var(--spacing-sm);
-  }
-  
-  .vagabond .armor-type-card .armor-details span {
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    color: var(--color-text-light);
-    padding: 2px 6px;
-    background: white;
-    border-radius: 3px;
-  }
-  
-  .vagabond .armor-type-card .armor-desc {
-    font-size: 12px;
-    color: var(--color-text-light);
-    margin: 0;
-    line-height: 1.4;
-  }
-  
-  /* Inventory properties grid */
-  .vagabond .inventory-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-lg);
-    margin-bottom: var(--spacing-xl);
-  }
-  
-  /* Currency grid for pricing */
-  .vagabond .currency-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--spacing-md);
-    margin-bottom: var(--spacing-xl);
-  }
-  
-  .vagabond .currency-grid label {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-xs);
-    font-weight: 700;
-    text-transform: uppercase;
-    font-size: 12px;
-    color: var(--color-text-light);
-  }
-  
-  .vagabond .currency-grid label i {
-    color: var(--color-accent);
-  }
+/* NO font-family rules at all - use Foundry defaults */
 
-  /* Responsive armor layout */
-  @media (max-width: 600px) {
-    .vagabond .armor-type-info {
-      grid-template-columns: 1fr;
-    }
-    
-    .vagabond .armor-stats-grid,
-    .vagabond .inventory-grid {
-      grid-template-columns: 1fr;
-    }
-  }
+.vagabond.sheet .window-content {
+  background: var(--color-bg);
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.vagabond.sheet form {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ==================== */
+/* Headers              */
+/* ==================== */
+
+.vagabond.sheet h1,
+.vagabond.sheet h2,
+.vagabond.sheet h3,
+.vagabond.sheet h4 {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: white;
+  background: var(--color-primary);
+  margin: var(--spacing-lg) 0 var(--spacing-md) 0;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+}
+
+.vagabond.sheet h2 {
+  margin-left: -60px;
+  padding-left: 60px;
+}
+
+/* ==================== */
+/* Form Elements        */
+/* ==================== */
+
+.vagabond.sheet input[type="text"],
+.vagabond.sheet input[type="number"],
+.vagabond.sheet textarea,
+.vagabond.sheet select {
+  background: var(--color-bg-light);
+  border: 1px solid var(--color-border);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  color: var(--color-text);
+}
+
+.vagabond.sheet button {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  cursor: pointer;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.vagabond.sheet button:hover {
+  background: var(--color-accent);
+  color: var(--color-primary);
+}
+
+/* ==================== */
+/* Sheet Header         */
+/* ==================== */
+
+.vagabond .sheet-header {
+  display: flex;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-lg) 60px;
+  background: var(--color-bg);
+  border-bottom: 4px solid var(--color-primary);
+  flex-shrink: 0;
+}
+
+.vagabond .profile {
+  width: 120px;
+  height: 120px;
+  border: 3px solid var(--color-primary);
+  object-fit: cover;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.vagabond .header-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.vagabond .header-details .charname input {
+  font-size: 32px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  border: none;
+  background: transparent;
+  color: var(--color-primary);
+}
+
+/* ==================== */
+/* Resources            */
+/* ==================== */
+
+.vagabond .resources {
+  display: flex;
+  gap: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+
+.vagabond .resource {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-bg-light);
+  border: 2px solid var(--color-border);
+}
+
+.vagabond .resource.hp {
+  border-color: var(--color-danger);
+}
+
+.vagabond .resource label {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: var(--color-text-light);
+}
+
+/* ==================== */
+/* Tabs                 */
+/* ==================== */
+
+.vagabond .tabs {
+  display: flex;
+  gap: 2px;
+  background: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.vagabond .tabs .item {
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  background: #5a5a5a;
+  color: white;
+}
+
+.vagabond .tabs .item.active {
+  background: var(--color-accent);
+  color: var(--color-primary);
+}
+
+/* ==================== */
+/* Sheet Body           */
+/* ==================== */
+
+.vagabond .sheet-body {
+  padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-lg) 60px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.vagabond .tab {
+  display: none;
+}
+
+.vagabond .tab.active {
+  display: block;
+}
+
+/* ==================== */
+/* Stats Grid           */
+/* ==================== */
+
+.vagabond .stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+}
+
+.vagabond .stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-md);
+  background: white;
+  border: 2px solid var(--color-primary);
+}
+
+.vagabond .stat label {
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.vagabond .stat input {
+  width: 80px;
+  text-align: center;
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--color-primary);
+}
+
+/* ==================== */
+/* Saves                */
+/* ==================== */
+
+.vagabond .saves-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+.vagabond .save {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-md);
+  background: var(--color-bg-light);
+  border: 1px solid var(--color-border);
+}
+
+.vagabond .save label {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 13px;
+  color: var(--color-text-light);
+  margin-bottom: var(--spacing-xs);
+}
+
+.vagabond .save .difficulty {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+/* ==================== */
+/* Skills List          */
+/* ==================== */
+
+.vagabond .skills-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.vagabond .skill {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto auto;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-bg-light);
+  border: 1px solid var(--color-border);
+}
+
+.vagabond .skill label {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+/* ==================== */
+/* Utility Classes      */
+/* ==================== */
+
+.vagabond .flexrow {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-md);
+}
+
+.vagabond .flexcol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
 }

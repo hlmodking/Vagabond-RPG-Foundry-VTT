@@ -1,4 +1,27 @@
 {
+  "TYPES": {
+    "Actor": {
+      "character": "Character",
+      "npc": "NPC"
+    },
+    "Item": {
+      "weapon": "Weapon",
+      "armor": "Armor",
+      "gear": "Gear",
+      "spell": "Spell",
+      "perk": "Perk",
+      "class": "Class",
+      "ancestry": "Ancestry"
+    }
+  },
+  
+  "DOCUMENT": {
+    "Actor": "Actor",
+    "Item": "Item",
+    "character": "Character",
+    "npc": "NPC"
+  },
+  
   "VAGABOND": {
     "SystemName": "Vagabond RPG",
     
