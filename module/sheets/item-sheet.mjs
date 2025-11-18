@@ -28,7 +28,8 @@ export class VagabondItemSheet extends HandlebarsApplicationMixin(foundry.applic
 
     static PARTS = {
         form: {
-            template: "systems/vagabond/templates/item/weapon-sheet.hbs"
+            // This will be overridden by get template()
+            template: "systems/vagabond/templates/item/item-sheet.hbs"
         }
     };
     
@@ -46,6 +47,12 @@ export class VagabondItemSheet extends HandlebarsApplicationMixin(foundry.applic
                 return "systems/vagabond/templates/item/spell-sheet.hbs";
             case "gear":
                 return "systems/vagabond/templates/item/gear-sheet.hbs";
+            case "perk":
+                return "systems/vagabond/templates/item/perk-sheet.hbs";
+            case "class":
+                return "systems/vagabond/templates/item/class-sheet.hbs";
+            case "ancestry":
+                return "systems/vagabond/templates/item/ancestry-sheet.hbs";
             default:
                 return "systems/vagabond/templates/item/item-sheet.hbs";
         }
@@ -53,12 +60,15 @@ export class VagabondItemSheet extends HandlebarsApplicationMixin(foundry.applic
 
     async _prepareContext(options) {
         const context = await super._prepareContext(options);
+        
+        // Make item available in template
+        context.item = this.document;
         context.system = this.document.system;
         context.config = CONFIG.VAGABOND;
         context.editable = this.isEditable;
 
-        // Enrich the description using the correct v13 API
-        context.enrichedDescription = await foundry.applications.fields.HTMLField.enrichHTML(
+        // Enrich the description using the actual v13 API (from deprecation warning)
+        context.enrichedDescription = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
             this.document.system.description || "", 
             {
                 secrets: this.document.isOwner,
@@ -82,21 +92,46 @@ export class VagabondItemSheet extends HandlebarsApplicationMixin(foundry.applic
     _onRender(context, options) {
         super._onRender(context, options);
         
-        // MANUAL FIX: Since submitOnChange isn't working reliably, manually wire up input changes
+        // Manual form handling - update only the changed field
         const html = this.element;
         const form = html.querySelector('form');
         
         if (form) {
+            // Prevent form submission on Enter key
+            form.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+                    e.preventDefault();
+                    e.target.blur(); // Trigger the change event
+                }
+            });
+            
             let submitTimeout;
             
-            // Handle regular inputs
+            // Handle regular inputs - update only the changed field
             form.querySelectorAll('input:not([type="checkbox"]), select, textarea').forEach(input => {
                 input.addEventListener('change', async (e) => {
                     clearTimeout(submitTimeout);
                     submitTimeout = setTimeout(async () => {
-                        const formData = new FormDataExtended(form);
-                        const submitData = foundry.utils.expandObject(formData.object);
-                        await this.document.update(submitData);
+                        const fieldName = e.target.name;
+                        let fieldValue = e.target.value;
+                        
+                        // Convert to number if it's a number input
+                        if (e.target.type === 'number') {
+                            fieldValue = e.target.valueAsNumber;
+                            if (isNaN(fieldValue)) fieldValue = 0;
+                        }
+                        
+                        // Build update object
+                        const updates = {};
+                        updates[fieldName] = fieldValue;
+                        
+                        console.log('Updating item:', updates);
+                        await this.document.update(updates);
+                        
+                        // Update the input to show the actual saved value
+                        if (fieldName === 'name') {
+                            e.target.value = this.document.name;
+                        }
                     }, 300);
                 });
             });
@@ -110,6 +145,7 @@ export class VagabondItemSheet extends HandlebarsApplicationMixin(foundry.applic
                         const checkedBoxes = form.querySelectorAll('input[type="checkbox"][name="system.properties"]:checked');
                         const properties = Array.from(checkedBoxes).map(cb => cb.value);
                         
+                        console.log('Updating properties:', properties);
                         await this.document.update({
                             'system.properties': properties
                         });
@@ -128,5 +164,5 @@ export class VagabondItemSheet extends HandlebarsApplicationMixin(foundry.applic
             title: this.document.name,
             shareable: true
         }).render(true);
-    }
+        }
 }

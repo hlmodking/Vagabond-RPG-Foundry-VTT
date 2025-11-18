@@ -846,502 +846,141 @@
     .vagabond .stats-grid {
       grid-template-columns: repeat(2, 1fr);
     }
-    
-    .vagabond .properties-grid {
-      grid-template-columns: 1fr;
-    }
   }
 
   /* ==================== */
-  /* Chat Cards           */
+  /* Armor Sheet Styles   */
   /* ==================== */
   
-  .vagabond.chat-card {
-    border: 2px solid #2a2a2a;
-    border-radius: 4px;
-    margin: 4px 0;
-    background: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-
-  .vagabond.chat-card .card-header {
-    background: #2a2a2a;
-    color: white;
-    padding: 8px 12px;
-    margin: 0;
-  }
-
-  .vagabond.chat-card .card-header h3 {
-    margin: 0;
-    font-size: 16px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-family: "Oswald", sans-serif;
-  }
-
-  .vagabond.chat-card .card-content {
-    padding: 12px;
-  }
-
-  .vagabond.chat-card .roll-info {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 12px;
-    padding: 8px;
-    background: #f5f5f5;
-    border-radius: 4px;
-  }
-
-  .vagabond.chat-card .roll-detail {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-  }
-
-  .vagabond.chat-card .roll-detail .label {
-    font-size: 11px;
-    text-transform: uppercase;
-    font-weight: 600;
-    color: #666;
-    letter-spacing: 0.5px;
-  }
-
-  .vagabond.chat-card .roll-detail .value {
-    font-size: 24px;
-    font-weight: 900;
-    font-family: "Oswald", sans-serif;
-  }
-
-  .vagabond.chat-card .roll-detail .difficulty {
-    color: #2a2a2a;
-  }
-
-  .vagabond.chat-card .roll-detail .total {
-    color: #e8c547;
-  }
-
-  .vagabond.chat-card .result-banner {
-    text-align: center;
-    padding: 12px;
-    border-radius: 4px;
-    font-size: 16px;
-    font-family: "Oswald", sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  .vagabond.chat-card .result-banner.crit {
-    background: rgba(90, 140, 58, 0.2);
-    border: 2px solid #5a8c3a;
-    color: #2d5a1d;
-  }
-
-  .vagabond.chat-card .result-banner.pass {
-    background: rgba(232, 197, 71, 0.2);
-    border: 2px solid #e8c547;
-    color: #8b7328;
-  }
-
-  .vagabond.chat-card .result-banner.fail {
-    background: rgba(184, 70, 58, 0.2);
-    border: 2px solid #b8463a;
-    color: #6d2a22;
-  }
-
-  .vagabond.chat-card .result-banner i {
-    margin: 0 4px;
-  }
-
-  /* Spell Cast Specific Styles */
-  .vagabond.chat-card.spell-cast {
-    border: 2px solid #8b6bb7;
-  }
-
-  .vagabond.chat-card.spell-cast .card-header {
-    background: linear-gradient(135deg, #6b4ba1 0%, #8b6bb7 100%);
-  }
-
-  .vagabond.chat-card.spell-cast .spell-info {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 12px;
-    padding: 8px;
-    background: #f5f0ff;
-    border-radius: 4px;
-    border: 1px solid #d0c0e8;
-  }
-
-  .vagabond.chat-card.spell-cast .spell-detail {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-  }
-
-  .vagabond.chat-card.spell-cast .spell-detail .label {
-    font-size: 11px;
-    text-transform: uppercase;
-    font-weight: 600;
-    color: #6b4ba1;
-    letter-spacing: 0.5px;
-  }
-
-  .vagabond.chat-card.spell-cast .spell-detail .value {
-    font-size: 16px;
-    font-weight: 700;
-    font-family: "Oswald", sans-serif;
-    color: #2a2a2a;
-  }
-
-  .vagabond.chat-card.spell-cast .spell-detail .mana-cost {
-    color: #8b6bb7;
-  }
-
-  .vagabond.chat-card.spell-cast .spell-effect {
-    padding: 8px;
-    background: #fafafa;
-    border-left: 3px solid #8b6bb7;
-    margin-bottom: 8px;
-  }
-
-  .vagabond.chat-card.spell-cast .spell-effect strong {
-    color: #6b4ba1;
-    text-transform: uppercase;
-    font-size: 12px;
-    letter-spacing: 0.5px;
-  }
-
-  .vagabond.chat-card.spell-cast .spell-effect p {
-    margin: 4px 0 0 0;
-    color: #333;
-  }
-
-  .vagabond.chat-card.spell-cast .spell-damage {
-    text-align: center;
-    padding: 8px;
-    background: rgba(139, 107, 183, 0.1);
-    border-radius: 4px;
-    color: #6b4ba1;
-    font-weight: 600;
-  }
-
-  .vagabond.chat-card.spell-cast .spell-damage i {
-    margin-right: 6px;
-  }
-  
-  /* ==================== */
-  /* Form Groups          */
-  /* ==================== */
-  
-  .vagabond .form-group {
-    margin-bottom: var(--spacing-lg);
-  }
-  
-  .vagabond .form-group label {
-    display: block;
-    font-weight: 700;
-    font-family: var(--font-headers);
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--color-primary);
-    margin-bottom: var(--spacing-xs);
-  }
-  
-  .vagabond .form-group input,
-  .vagabond .form-group select,
-  .vagabond .form-group textarea {
-    width: 100%;
-  }
-  
-  .vagabond .form-group .hint {
-    font-size: 11px;
-    color: var(--color-text-light);
-    margin-top: var(--spacing-xs);
-    font-style: italic;
-  }
-  
-  .vagabond .form-row {
+  /* Armor stats in a 2-column grid */
+  .vagabond .armor-stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: var(--spacing-md);
-    margin-bottom: var(--spacing-lg);
-  }
-  
-  /* ==================== */
-  /* Properties Grid      */
-  /* ==================== */
-  
-  .vagabond .properties-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: var(--spacing-sm);
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
     margin-bottom: var(--spacing-xl);
   }
   
-  .vagabond .property-checkbox {
-    display: flex;
-    flex-direction: column;
+  /* Armor type information cards */
+  .vagabond .armor-type-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .vagabond .armor-type-card {
     padding: var(--spacing-md);
-    background: var(--color-bg-light);
     border: 2px solid var(--color-border);
     border-radius: var(--border-radius);
-    cursor: pointer;
+    background: var(--color-bg-light);
     transition: all 0.2s;
   }
   
-  .vagabond .property-checkbox:hover {
-    background: white;
-    border-color: var(--color-accent);
+  .vagabond .armor-type-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
-  .vagabond .property-checkbox input[type="checkbox"] {
-    margin-bottom: var(--spacing-xs);
-    width: 18px;
-    height: 18px;
+  .vagabond .armor-type-card.light {
+    border-color: var(--color-success);
   }
   
-  .vagabond .property-checkbox input[type="checkbox"]:checked ~ .property-name {
-    color: var(--color-accent);
+  .vagabond .armor-type-card.light:hover {
+    background: rgba(90, 140, 58, 0.05);
   }
   
-  .vagabond .property-checkbox .property-name {
-    font-weight: 700;
+  .vagabond .armor-type-card.medium {
+    border-color: var(--color-warning);
+  }
+  
+  .vagabond .armor-type-card.medium:hover {
+    background: rgba(232, 197, 71, 0.05);
+  }
+  
+  .vagabond .armor-type-card.heavy {
+    border-color: var(--color-danger);
+  }
+  
+  .vagabond .armor-type-card.heavy:hover {
+    background: rgba(184, 70, 58, 0.05);
+  }
+  
+  .vagabond .armor-type-card h4 {
     font-family: var(--font-headers);
-    font-size: 13px;
+    font-size: 14px;
     text-transform: uppercase;
     letter-spacing: 1px;
     color: var(--color-primary);
-    margin-bottom: var(--spacing-xs);
-  }
-  
-  .vagabond .property-checkbox .property-desc {
-    font-size: 11px;
-    color: var(--color-text-light);
-    line-height: 1.4;
-  }
-  
-  .vagabond .property-checkbox input[type="checkbox"]:checked {
-    accent-color: var(--color-accent);
-  }
-  
-  /* ==================== */
-  /* Item Subtitle        */
-  /* ==================== */
-  
-  .vagabond .item-subtitle {
-    font-size: 14px;
-    color: var(--color-text-light);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    margin: 0 0 var(--spacing-sm) 0;
+    padding: 0;
+    background: transparent;
     display: flex;
     align-items: center;
     gap: var(--spacing-xs);
   }
   
-  .vagabond .item-subtitle i {
+  .vagabond .armor-type-card .armor-details {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .vagabond .armor-type-card .armor-details span {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--color-text-light);
+    padding: 2px 6px;
+    background: white;
+    border-radius: 3px;
+  }
+  
+  .vagabond .armor-type-card .armor-desc {
+    font-size: 12px;
+    color: var(--color-text-light);
+    margin: 0;
+    line-height: 1.4;
+  }
+  
+  /* Inventory properties grid */
+  .vagabond .inventory-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  /* Currency grid for pricing */
+  .vagabond .currency-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .vagabond .currency-grid label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: var(--color-text-light);
+  }
+  
+  .vagabond .currency-grid label i {
     color: var(--color-accent);
   }
+
+  /* Responsive armor layout */
+  @media (max-width: 600px) {
+    .vagabond .armor-type-info {
+      grid-template-columns: 1fr;
+    }
+    
+    .vagabond .armor-stats-grid,
+    .vagabond .inventory-grid {
+      grid-template-columns: 1fr;
+    }
+  }
 }
-
-/* ==================== */
-/* Chat Cards - GLOBAL  */
-/* Chat messages are not scoped inside .vagabond */
-/* ==================== */
-
-.chat-message .vagabond.chat-card {
-  border: 2px solid #2a2a2a;
-  border-radius: 4px;
-  margin: 4px 0;
-  background: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.chat-message .vagabond.chat-card .card-header {
-  background: #2a2a2a !important;
-  color: white !important;
-  padding: 8px 12px;
-  margin: 0;
-}
-
-.chat-message .vagabond.chat-card .card-header h3 {
-  margin: 0 !important;
-  font-size: 16px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-family: "Oswald", "Arial Black", sans-serif;
-  color: white !important;
-}
-
-.chat-message .vagabond.chat-card .card-content {
-  padding: 12px;
-}
-
-.chat-message .vagabond.chat-card .roll-info {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 12px;
-  padding: 8px;
-  background: #f5f5f5;
-  border-radius: 4px;
-}
-
-.chat-message .vagabond.chat-card .roll-detail {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-}
-
-.chat-message .vagabond.chat-card .roll-detail .label {
-  font-size: 11px;
-  text-transform: uppercase;
-  font-weight: 600;
-  color: #666;
-  letter-spacing: 0.5px;
-}
-
-.chat-message .vagabond.chat-card .roll-detail .value {
-  font-size: 24px;
-  font-weight: 900;
-  font-family: "Oswald", "Arial Black", sans-serif;
-}
-
-.chat-message .vagabond.chat-card .roll-detail .difficulty {
-  color: #2a2a2a;
-}
-
-.chat-message .vagabond.chat-card .roll-detail .total {
-  color: #e8c547;
-}
-
-.chat-message .vagabond.chat-card .result-banner {
-  text-align: center;
-  padding: 12px;
-  border-radius: 4px;
-  font-size: 16px;
-  font-family: "Oswald", "Arial Black", sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.chat-message .vagabond.chat-card .result-banner.crit {
-  background: rgba(90, 140, 58, 0.2);
-  border: 2px solid #5a8c3a;
-  color: #2d5a1d;
-}
-
-.chat-message .vagabond.chat-card .result-banner.pass {
-  background: rgba(232, 197, 71, 0.2);
-  border: 2px solid #e8c547;
-  color: #8b7328;
-}
-
-.chat-message .vagabond.chat-card .result-banner.fail {
-  background: rgba(184, 70, 58, 0.2);
-  border: 2px solid #b8463a;
-  color: #6d2a22;
-}
-
-.chat-message .vagabond.chat-card .result-banner i {
-  margin: 0 4px;
-}
-
-/* Spell Cast Specific Styles */
-.chat-message .vagabond.chat-card.spell-cast {
-  border: 2px solid #8b6bb7;
-}
-
-.chat-message .vagabond.chat-card.spell-cast .card-header {
-  background: linear-gradient(135deg, #6b4ba1 0%, #8b6bb7 100%);
-}
-
-.chat-message .vagabond.chat-card.spell-cast .spell-info {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 12px;
-  padding: 8px;
-  background: #f5f0ff;
-  border-radius: 4px;
-  border: 1px solid #d0c0e8;
-}
-
-.chat-message .vagabond.chat-card.spell-cast .spell-detail {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-}
-
-.chat-message .vagabond.chat-card.spell-cast .spell-detail .label {
-  font-size: 11px;
-  text-transform: uppercase;
-  font-weight: 600;
-  color: #6b4ba1;
-  letter-spacing: 0.5px;
-}
-
-.chat-message .vagabond.chat-card.spell-cast .spell-detail .value {
-  font-size: 16px;
-  font-weight: 700;
-  font-family: "Oswald", "Arial Black", sans-serif;
-  color: #2a2a2a;
-}
-
-.chat-message .vagabond.chat-card.spell-cast .spell-detail .mana-cost {
-  color: #8b6bb7;
-}
-
-.chat-message .vagabond.chat-card.spell-cast .spell-effect {
-  padding: 8px;
-  background: #fafafa;
-  border-left: 3px solid #8b6bb7;
-  margin-bottom: 8px;
-}
-
-.chat-message .vagabond.chat-card.spell-cast .spell-effect strong {
-  color: #6b4ba1;
-  text-transform: uppercase;
-  font-size: 12px;
-  letter-spacing: 0.5px;
-}
-
-.chat-message .vagabond.chat-card.spell-cast .spell-effect p {
-  margin: 4px 0 0 0;
-  color: #333;
-}
-
-.chat-message .vagabond.chat-card.spell-cast .spell-damage {
-  text-align: center;
-  padding: 8px;
-  background: rgba(139, 107, 183, 0.1);
-  border-radius: 4px;
-  color: #6b4ba1;
-  font-weight: 600;
-}
-
-.chat-message .vagabond.chat-card .spell-cast .spell-damage i {
-  margin-right: 6px;
-}
-
-/* Ensure Foundry's dice rolls display properly */
-.chat-message .message-content .dice-roll {
-  margin-top: 8px;
-}
-
-.chat-message .message-content .dice-tooltip {
-  display: block !important;
-}
-
-/* Make sure dice results are visible in our chat cards */
-.chat-message .vagabond.chat-card + .dice-roll,
-.chat-message .dice-roll {
-  margin: 8px 0;
-  font-size: 14px;
-}
-
-

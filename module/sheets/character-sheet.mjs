@@ -58,6 +58,7 @@ export class VagabondCharacterSheet extends HandlebarsApplicationMixin(foundry.a
     const systemData = actor.system;
 
     // Add basic context
+    context.actor = actor;  // Make sure actor is available in template
     context.system = systemData;
     context.config = CONFIG.VAGABOND;
     context.editable = this.isEditable;
@@ -111,8 +112,8 @@ export class VagabondCharacterSheet extends HandlebarsApplicationMixin(foundry.a
 
     context.tabGroups = this.tabGroups;
 
-    // Add enriched biography using correct v13 API
-    context.enrichedBiography = await foundry.applications.fields.HTMLField.enrichHTML(
+    // Add enriched biography using the actual v13 API (from deprecation warning)
+    context.enrichedBiography = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
       systemData.biography || "", 
       {
         secrets: this.document.isOwner,
@@ -196,6 +197,14 @@ export class VagabondCharacterSheet extends HandlebarsApplicationMixin(foundry.a
       try {
         await this.document.update(submitData);
         console.log("✅ Actor updated successfully!");
+        
+        // Update the name input to show the actual saved value
+        if (submitData.name !== undefined) {
+          const nameInput = form.querySelector('input[name="name"]');
+          if (nameInput) {
+            nameInput.value = this.document.name;
+          }
+        }
       } catch (error) {
         console.error("❌ Error updating actor:", error);
       }
