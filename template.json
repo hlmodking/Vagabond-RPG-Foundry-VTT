@@ -201,9 +201,10 @@
       "damageBase": "",
       "effect": "",
       "delivery": "touch",
-      "deliveryCost": 0,
       "duration": "instant",
-      "school": "none"
+      "areaOfEffect": "",
+      "targets": "",
+      "castingNotes": ""
     },
     "perk": {
       "templates": ["base"],

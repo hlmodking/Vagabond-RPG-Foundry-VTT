@@ -135,7 +135,7 @@ export class VagabondItem extends Item {
     const roll = new Roll(formula);
     await roll.evaluate();
 
-    // Create chat message
+    // Create chat message - In v13+, just provide rolls array
     const messageData = {
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
       flavor: `${this.name} - ${game.i18n.localize("VAGABOND.Combat.Damage")}`,
@@ -199,15 +199,19 @@ export class VagabondItem extends Item {
     const messageData = {
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
       flavor: `${this.name} - ${game.i18n.localize("VAGABOND.Magic.Cast")}`,
-      content: await foundry.applications.handlebars.renderTemplate("systems/vagabond/templates/chat/spell-cast.hbs", {
-        spell: this,
-        delivery: game.i18n.localize(CONFIG.VAGABOND.spellDeliveries[systemData.delivery].label),
-        manaCost,
-        effect: systemData.effect,
-        damageRoll
-      })
+      content: await foundry.applications.handlebars.renderTemplate(
+        "systems/vagabond/templates/chat/spell-cast.hbs", 
+        {
+          spell: this,
+          delivery: game.i18n.localize(CONFIG.VAGABOND.spellDeliveries[systemData.delivery].label),
+          manaCost,
+          effect: systemData.effect,
+          damageRoll
+        }
+      )
     };
 
+    // In Foundry v13+, just provide rolls array - no need to set type
     if (damageRoll) {
       messageData.rolls = [damageRoll];
     }

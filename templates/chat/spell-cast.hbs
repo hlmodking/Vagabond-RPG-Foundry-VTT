@@ -1,32 +1,32 @@
-<div class="vagabond chat-card spell-cast">
-  <div class="card-header">
-    <h3><i class="fas fa-magic"></i> {{spell.name}}</h3>
+<div class="vagabond spell-cast-card">
+  <div class="spell-header">
+    <h3>{{spell.name}}</h3>
   </div>
   
-  <div class="card-content">
-    <div class="spell-info">
-      <div class="spell-detail">
-        <span class="label">Delivery:</span>
-        <span class="value">{{delivery}}</span>
-      </div>
-      {{#if manaCost}}
-      <div class="spell-detail">
-        <span class="label">Mana Cost:</span>
-        <span class="value mana-cost">{{manaCost}}</span>
-      </div>
-      {{/if}}
+  <div class="spell-details">
+    <div class="detail-row">
+      <strong>Delivery:</strong>
+      <span>{{delivery}}</span>
     </div>
     
+    {{#if manaCost}}
+    <div class="detail-row">
+      <strong>Mana Cost:</strong>
+      <span class="mana-cost">{{manaCost}}</span>
+    </div>
+    {{/if}}
+    
     {{#if effect}}
-    <div class="spell-effect">
+    <div class="detail-row effect-row">
       <strong>Effect:</strong>
-      <p>{{effect}}</p>
+      <div class="effect-text">{{effect}}</div>
     </div>
     {{/if}}
     
     {{#if damageRoll}}
-    <div class="spell-damage">
-      <i class="fas fa-burst"></i> <strong>Damage Roll Included</strong>
+    <div class="detail-row damage-row">
+      <strong>Damage:</strong>
+      <span class="damage-value">{{damageRoll.total}}</span>
     </div>
     {{/if}}
   </div>

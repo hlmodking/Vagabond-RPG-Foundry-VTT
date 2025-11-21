@@ -32,7 +32,7 @@ export class VagabondActor extends Actor {
     
     const systemData = actorData.system;
 
-    // Calculate Max HP (Might × Level)
+    // Calculate Max HP (Might Ã— Level)
     systemData.hp.max = systemData.stats.might.value * systemData.level;
     
     // Calculate Inventory Slots (8 + Might)
@@ -84,7 +84,7 @@ export class VagabondActor extends Actor {
     const systemData = actorData.system;
 
     // Calculate Max HP based on HD
-    // For simplicity, using average HP: HD × 4.5 (rounded)
+    // For simplicity, using average HP: HD Ã— 4.5 (rounded)
     systemData.hp.max = Math.floor(systemData.hd * 4.5);
 
     // Calculate Saves (simplified for NPCs)
@@ -154,20 +154,21 @@ export class VagabondActor extends Actor {
       resultType = "pass";
     }
 
-    // Create chat message - Let Foundry render the roll, we'll use flavor for our card
-    const cardHtml = await foundry.applications.handlebars.renderTemplate("systems/vagabond/templates/chat/check-result.hbs", {
-      difficulty,
-      total,
-      resultType,
-      isCrit: d20Result === 20,
-      label,
-      formula: roll.formula
-    });
-
+    // Create chat message
     const messageData = {
       speaker: ChatMessage.getSpeaker({ actor: this }),
-      flavor: cardHtml,
-      rolls: [roll]
+      flavor: label,
+      rolls: [roll],
+      content: await foundry.applications.handlebars.renderTemplate(
+        "systems/vagabond/templates/chat/check-result.hbs", 
+        {
+          difficulty,
+          total,
+          resultType,
+          isCrit: d20Result === 20,
+          label
+        }
+      )
     };
 
     await ChatMessage.create(messageData);

@@ -1,27 +1,28 @@
-<div class="vagabond chat-card check-result {{resultType}}">
-  <div class="card-header">
+<div class="vagabond check-result-card {{resultType}}">
+  <div class="check-header">
     <h3>{{label}}</h3>
   </div>
   
-  <div class="card-content">
-    <div class="roll-info">
-      <div class="roll-detail">
-        <span class="label">Target:</span>
-        <span class="value difficulty">{{difficulty}}</span>
+  <div class="check-details">
+    <div class="result-display">
+      <div class="total">
+        <strong>Roll Total</strong>
+        <span class="value">{{total}}</span>
       </div>
-      <div class="roll-detail">
-        <span class="label">Result:</span>
-        <span class="value total">{{total}}</span>
+      
+      <div class="difficulty">
+        <strong>Difficulty</strong>
+        <span class="value">{{difficulty}}</span>
       </div>
     </div>
     
-    <div class="result-banner {{resultType}}">
+    <div class="result-status {{resultType}}">
       {{#if isCrit}}
-        <i class="fas fa-star"></i> <strong>CRITICAL SUCCESS!</strong> <i class="fas fa-star"></i>
+        ⭐ <strong>Critical Success!</strong>
       {{else if (eq resultType "pass")}}
-        <i class="fas fa-check-circle"></i> <strong>Success!</strong>
+        ✓ <strong>Success</strong>
       {{else}}
-        <i class="fas fa-times-circle"></i> <strong>Failure</strong>
+        ✗ <strong>Failure</strong>
       {{/if}}
     </div>
   </div>
