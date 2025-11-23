@@ -13,7 +13,8 @@ export class VagabondItemSheet extends HandlebarsApplicationMixin(foundry.applic
             height: 700
         },
         actions: {
-            showImage: VagabondItemSheet._onShowImage
+            editImage: VagabondItemSheet._onEditImage,
+            toggleEditor: VagabondItemSheet._onToggleEditor
         },
         window: {
             resizable: true,
@@ -28,14 +29,11 @@ export class VagabondItemSheet extends HandlebarsApplicationMixin(foundry.applic
 
     static PARTS = {
         form: {
-            // This will be overridden by get template()
             template: "systems/vagabond/templates/item/item-sheet.hbs"
         }
     };
     
-    /** @override */
     get template() {
-        // Return different templates based on item type
         const type = this.document.type;
         
         switch (type) {
@@ -61,53 +59,43 @@ export class VagabondItemSheet extends HandlebarsApplicationMixin(foundry.applic
     async _prepareContext(options) {
         const context = await super._prepareContext(options);
         
-        // Make item available in template
         context.item = this.document;
         context.system = this.document.system;
         context.config = CONFIG.VAGABOND;
         context.editable = this.isEditable;
 
-        // Enrich the description using the actual v13 API (from deprecation warning)
-        context.enrichedDescription = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
+        context.enrichedDescription = await foundry.applications.ux.TextEditor.enrichHTML(
             this.document.system.description || "", 
             {
                 secrets: this.document.isOwner,
-                relativeTo: this.document,
-                async: true
+                relativeTo: this.document
             }
         );
 
         return context;
     }
     
-    /**
-     * Handle form submission
-     */
     static async #onSubmitForm(event, form, formData) {
         const submitData = foundry.utils.expandObject(formData.object);
         await this.document.update(submitData);
     }
     
-    /** @override */
     _onRender(context, options) {
         super._onRender(context, options);
         
-        // Manual form handling - update only the changed field
         const html = this.element;
         const form = html.querySelector('form');
         
         if (form) {
-            // Prevent form submission on Enter key
             form.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
                     e.preventDefault();
-                    e.target.blur(); // Trigger the change event
+                    e.target.blur();
                 }
             });
             
             let submitTimeout;
             
-            // Handle regular inputs - update only the changed field
             form.querySelectorAll('input:not([type="checkbox"]), select, textarea').forEach(input => {
                 input.addEventListener('change', async (e) => {
                     clearTimeout(submitTimeout);
@@ -115,20 +103,16 @@ export class VagabondItemSheet extends HandlebarsApplicationMixin(foundry.applic
                         const fieldName = e.target.name;
                         let fieldValue = e.target.value;
                         
-                        // Convert to number if it's a number input
                         if (e.target.type === 'number') {
                             fieldValue = e.target.valueAsNumber;
                             if (isNaN(fieldValue)) fieldValue = 0;
                         }
                         
-                        // Build update object
                         const updates = {};
                         updates[fieldName] = fieldValue;
                         
-                        console.log('Updating item:', updates);
                         await this.document.update(updates);
                         
-                        // Update the input to show the actual saved value
                         if (fieldName === 'name') {
                             e.target.value = this.document.name;
                         }
@@ -136,16 +120,13 @@ export class VagabondItemSheet extends HandlebarsApplicationMixin(foundry.applic
                 });
             });
             
-            // Handle checkboxes (properties) specially
             form.querySelectorAll('input[type="checkbox"][name="system.properties"]').forEach(checkbox => {
                 checkbox.addEventListener('change', async (e) => {
                     clearTimeout(submitTimeout);
                     submitTimeout = setTimeout(async () => {
-                        // Collect all checked property values
                         const checkedBoxes = form.querySelectorAll('input[type="checkbox"][name="system.properties"]:checked');
                         const properties = Array.from(checkedBoxes).map(cb => cb.value);
                         
-                        console.log('Updating properties:', properties);
                         await this.document.update({
                             'system.properties': properties
                         });
@@ -155,14 +136,68 @@ export class VagabondItemSheet extends HandlebarsApplicationMixin(foundry.applic
         }
     }
     
+    static _onEditImage(event, target) {
+        const current = this.document.img;
+        const fp = new foundry.applications.apps.FilePicker({
+            type: "image",
+            current: current,
+            callback: path => {
+                this.document.update({img: path});
+            }
+        });
+        fp.render(true);
+    }
+
     /**
-     * Show item image
+     * Toggle description editor
      */
-    static _onShowImage(event, target) {
-        const img = target.src || this.document.img;
-        new ImagePopout(img, {
-            title: this.document.name,
-            shareable: true
-        }).render(true);
+    static async _onToggleEditor(event, target) {
+        event.preventDefault();
+        
+        const fieldName = target.dataset.target;
+        const editorContainer = target.closest('.editor-container');
+        const contentDiv = editorContainer.querySelector('.editor-content');
+        const button = editorContainer.querySelector('.editor-edit');
+        
+        const textarea = contentDiv.querySelector('textarea');
+        const isEditing = textarea !== null;
+        
+        if (isEditing) {
+            let newContent = textarea.value;
+            if (!newContent && textarea.dataset.backupValue) {
+                newContent = textarea.dataset.backupValue;
+            }
+            
+            await this.document.update({ [fieldName]: newContent });
+            
+            const enriched = await foundry.applications.ux.TextEditor.enrichHTML(newContent, {
+                secrets: this.document.isOwner,
+                relativeTo: this.document
+            });
+            
+            contentDiv.innerHTML = enriched || '<p class="hint">No description yet.</p>';
+            button.innerHTML = '<i class="fas fa-edit"></i> Edit';
+            
+        } else {
+            const currentContent = foundry.utils.getProperty(this.document, fieldName) || "";
+            
+            const textarea = document.createElement('textarea');
+            textarea.name = fieldName;
+            textarea.rows = 15;
+            textarea.style.cssText = 'width: 100%; font-family: monospace; padding: 8px;';
+            textarea.value = currentContent;
+            
+            textarea.addEventListener('input', (e) => {
+                e.target.dataset.backupValue = e.target.value;
+            });
+            
+            contentDiv.innerHTML = '';
+            contentDiv.appendChild(textarea);
+            
+            button.innerHTML = '<i class="fas fa-save"></i> Save';
+            
+            textarea.focus();
+            textarea.setSelectionRange(textarea.value.length, textarea.value.length);
         }
+    }
 }

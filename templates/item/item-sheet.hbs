@@ -2,7 +2,7 @@
   
   {{!-- Sheet Header --}}
   <header class="sheet-header">
-    <img class="profile" src="{{item.img}}" data-action="showImage" title="{{item.name}}" alt="{{item.name}}"/>
+    <img class="profile" src="{{item.img}}" data-action="editImage" title="Click to change image" alt="{{item.name}}"/>
     
     <div class="header-details flexcol">
       <h1 class="charname">
@@ -140,8 +140,15 @@
     {{/if}}
     
     <h3>Description</h3>
-    <div class="editor">
-      {{editor enrichedDescription target="system.description" button=true editable=editable}}
+    <div class="editor-container">
+      <div class="editor-content" data-edit="system.description">
+        {{{enrichedDescription}}}
+      </div>
+      {{#if editable}}
+      <button type="button" class="editor-edit" data-action="toggleEditor" data-target="system.description">
+        <i class="fas fa-edit"></i> Edit
+      </button>
+      {{/if}}
     </div>
 
   </section>

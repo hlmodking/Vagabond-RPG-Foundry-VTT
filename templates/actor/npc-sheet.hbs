@@ -2,7 +2,7 @@
   
   {{!-- Sheet Header --}}
   <header class="sheet-header">
-    <img class="profile" src="{{actor.img}}" data-action="showImage" title="{{actor.name}}" alt="{{actor.name}}"/>
+    <img class="profile" src="{{actor.img}}" data-action="editImage" title="Click to change image" alt="{{actor.name}}"/>
     
     <div class="header-details flexcol">
       <h1 class="charname">
@@ -89,8 +89,15 @@
     </div>
     
     <h2>Description</h2>
-    <div class="editor">
-      {{editor enrichedBiography target="system.biography" button=true editable=editable}}
+    <div class="editor-container">
+      <div class="editor-content" data-edit="system.biography">
+        {{{enrichedBiography}}}
+      </div>
+      {{#if editable}}
+      <button type="button" class="editor-edit" data-action="toggleEditor" data-target="system.biography">
+        <i class="fas fa-edit"></i> Edit
+      </button>
+      {{/if}}
     </div>
 
   </section>

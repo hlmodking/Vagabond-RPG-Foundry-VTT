@@ -218,11 +218,34 @@
     flex-shrink: 0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s;
+    background: var(--color-bg-dark);
+    position: relative;
   }
   
   .vagabond .profile:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Fallback for broken images */
+  .vagabond .profile::before {
+    content: '\f007'; /* FontAwesome user icon */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    color: var(--color-primary);
+    opacity: 0.3;
+    pointer-events: none;
+  }
+  
+  .vagabond .profile[src*="mystery-man"],
+  .vagabond .profile[src=""],
+  .vagabond .profile:not([src]) {
+    opacity: 0.7;
   }
   
   .vagabond .header-details {
@@ -860,6 +883,34 @@
   /* ==================== */
   /* Editor               */
   /* ==================== */
+  
+  .vagabond .editor-container {
+    position: relative;
+    min-height: 200px;
+  }
+  
+  .vagabond .editor-content {
+    padding: var(--spacing-md);
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    min-height: 200px;
+  }
+  
+  .vagabond .editor-content textarea {
+    width: 100%;
+    min-height: 300px;
+    font-family: monospace;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    resize: vertical;
+  }
+  
+  .vagabond .editor-edit {
+    margin-top: var(--spacing-sm);
+    width: auto;
+  }
   
   .vagabond .editor {
     min-height: 300px;

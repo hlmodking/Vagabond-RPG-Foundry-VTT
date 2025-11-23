@@ -171,7 +171,19 @@
             <label>Trained</label>
           </div>
 
-          <div class="difficulty">Difficulty</div>
+          <div class="difficulty">
+            {{#if (eq skill.stat "might")}}
+              {{calculateDifficulty ../system.stats.might.value skill.trained}}
+            {{else if (eq skill.stat "dexterity")}}
+              {{calculateDifficulty ../system.stats.dexterity.value skill.trained}}
+            {{else if (eq skill.stat "awareness")}}
+              {{calculateDifficulty ../system.stats.awareness.value skill.trained}}
+            {{else if (eq skill.stat "reason")}}
+              {{calculateDifficulty ../system.stats.reason.value skill.trained}}
+            {{else if (eq skill.stat "presence")}}
+              {{calculateDifficulty ../system.stats.presence.value skill.trained}}
+            {{/if}}
+          </div>
 
           <button type="button" data-action="rollCheck" data-check-type="skill" data-check-key="{{key}}">
             <i class="fas fa-dice-d20"></i>

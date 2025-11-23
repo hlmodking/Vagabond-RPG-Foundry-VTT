@@ -25,7 +25,8 @@ export class VagabondCharacterSheet extends HandlebarsApplicationMixin(foundry.a
       rest: VagabondCharacterSheet._onRest,
       breather: VagabondCharacterSheet._onBreather,
       spendLuck: VagabondCharacterSheet._onSpendLuck,
-      showImage: VagabondCharacterSheet._onShowImage
+      editImage: VagabondCharacterSheet._onEditImage,
+      toggleEditor: VagabondCharacterSheet._onToggleEditor
     },
     window: {
       title: "Character Sheet",
@@ -33,7 +34,6 @@ export class VagabondCharacterSheet extends HandlebarsApplicationMixin(foundry.a
       minimizable: true,
       icon: "fa-solid fa-user"
     },
-    // Form configuration - let ActorSheetV2 handle it
     form: {
       submitOnChange: true,
       closeOnSubmit: false
@@ -58,12 +58,10 @@ export class VagabondCharacterSheet extends HandlebarsApplicationMixin(foundry.a
     const actor = this.document;
     const systemData = actor.system;
 
-    // Add basic context
     context.system = systemData;
     context.config = CONFIG.VAGABOND;
     context.editable = this.isEditable;
 
-    // Organize items by type
     context.items = {
       weapons: [],
       armor: [],
@@ -82,7 +80,6 @@ export class VagabondCharacterSheet extends HandlebarsApplicationMixin(foundry.a
       }
     }
 
-    // Prepare tabs
     context.tabs = [
       {
         group: "primary",
@@ -118,7 +115,6 @@ export class VagabondCharacterSheet extends HandlebarsApplicationMixin(foundry.a
 
     context.tabGroups = this.tabGroups;
 
-    // Add enriched biography
     context.enrichedBiography = await foundry.applications.ux.TextEditor.enrichHTML(systemData.biography, {
       secrets: this.document.isOwner,
       relativeTo: this.document
@@ -131,43 +127,32 @@ export class VagabondCharacterSheet extends HandlebarsApplicationMixin(foundry.a
   _onRender(context, options) {
     super._onRender(context, options);
 
-    // Make items draggable
     const html = this.element;
     html.querySelectorAll('.item[data-item-id]').forEach(el => {
       el.setAttribute('draggable', 'true');
       el.addEventListener('dragstart', this._onDragStart.bind(this));
     });
 
-    // Handle item drops
     html.addEventListener('drop', this._onDrop.bind(this));
     html.addEventListener('dragover', ev => ev.preventDefault());
 
-    // Tab switching
     html.querySelectorAll('.tabs [data-tab]').forEach(tab => {
       tab.addEventListener('click', this._onChangeTab.bind(this));
     });
 
-    // MANUAL FIX: Since submitOnChange isn't working, manually wire up input changes
     const form = html.querySelector('form');
     if (form) {
-      // Add debounced change handler to all inputs
       let submitTimeout;
       form.querySelectorAll('input, select, textarea').forEach(input => {
         input.addEventListener('change', async (e) => {
-          // Clear any pending submit
           clearTimeout(submitTimeout);
           
-          // Debounce the submit (wait 300ms after last change)
           submitTimeout = setTimeout(async () => {
             const fieldName = e.target.name;
             if (!fieldName) return;
             
-            console.log("Updating field:", fieldName, "with value:", e.target.value);
-            
-            // Only update the specific field that changed
             const updateData = {};
             
-            // Handle checkboxes
             if (e.target.type === 'checkbox') {
               updateData[fieldName] = e.target.checked;
             } else if (e.target.type === 'number') {
@@ -176,12 +161,8 @@ export class VagabondCharacterSheet extends HandlebarsApplicationMixin(foundry.a
               updateData[fieldName] = e.target.value;
             }
             
-            console.log("Update data:", updateData);
-            
-            // Update the actor
             try {
               await this.document.update(updateData);
-              console.log("Field updated successfully!");
             } catch (error) {
               console.error("Error updating field:", error);
             }
@@ -191,9 +172,6 @@ export class VagabondCharacterSheet extends HandlebarsApplicationMixin(foundry.a
     }
   }
 
-  /**
-   * Handle tab changes
-   */
   _onChangeTab(event) {
     event.preventDefault();
     const newTab = event.currentTarget.dataset.tab;
@@ -213,9 +191,6 @@ export class VagabondCharacterSheet extends HandlebarsApplicationMixin(foundry.a
     });
   }
 
-  /**
-   * Handle drag start for items
-   */
   _onDragStart(event) {
     const itemId = event.currentTarget.dataset.itemId;
     const item = this.document.items.get(itemId);
@@ -227,9 +202,6 @@ export class VagabondCharacterSheet extends HandlebarsApplicationMixin(foundry.a
     }));
   }
 
-  /**
-   * Handle drops
-   */
   async _onDrop(event) {
     event.preventDefault();
 
@@ -248,20 +220,18 @@ export class VagabondCharacterSheet extends HandlebarsApplicationMixin(foundry.a
     }
   }
 
-  /**
-   * Show actor/item image
-   */
-  static _onShowImage(event, target) {
-    const img = target.src || this.document.img;
-    new ImagePopout(img, {
-      title: this.document.name,
-      shareable: true
-    }).render(true);
+  static _onEditImage(event, target) {
+    const current = this.document.img;
+    const fp = new foundry.applications.apps.FilePicker({
+      type: "image",
+      current: current,
+      callback: path => {
+        this.document.update({img: path});
+      }
+    });
+    fp.render(true);
   }
 
-  /**
-   * Roll a check
-   */
   static async _onRollCheck(event, target) {
     event.preventDefault();
     const checkType = target.dataset.checkType;
@@ -292,9 +262,6 @@ export class VagabondCharacterSheet extends HandlebarsApplicationMixin(foundry.a
     }).render(true);
   }
 
-  /**
-   * Roll damage
-   */
   static async _onRollDamage(event, target) {
     event.preventDefault();
     const itemId = target.closest('[data-item-id]')?.dataset.itemId;
@@ -316,9 +283,6 @@ export class VagabondCharacterSheet extends HandlebarsApplicationMixin(foundry.a
     await ChatMessage.create(messageData);
   }
 
-  /**
-   * Edit an item
-   */
   static _onEditItem(event, target) {
     event.preventDefault();
     const itemId = target.closest('[data-item-id]')?.dataset.itemId;
@@ -328,9 +292,6 @@ export class VagabondCharacterSheet extends HandlebarsApplicationMixin(foundry.a
     if (item) item.sheet.render(true);
   }
 
-  /**
-   * Delete an item
-   */
   static async _onDeleteItem(event, target) {
     event.preventDefault();
     const itemId = target.closest('[data-item-id]')?.dataset.itemId;
@@ -349,9 +310,6 @@ export class VagabondCharacterSheet extends HandlebarsApplicationMixin(foundry.a
     }
   }
 
-  /**
-   * Toggle equipped status
-   */
   static async _onToggleEquipped(event, target) {
     event.preventDefault();
     const itemId = target.closest('[data-item-id]')?.dataset.itemId;
@@ -363,9 +321,6 @@ export class VagabondCharacterSheet extends HandlebarsApplicationMixin(foundry.a
     await item.update({ 'system.equipped': !item.system.equipped });
   }
 
-  /**
-   * Cast a spell
-   */
   static async _onCastSpell(event, target) {
     event.preventDefault();
     const itemId = target.closest('[data-item-id]')?.dataset.itemId;
@@ -374,14 +329,12 @@ export class VagabondCharacterSheet extends HandlebarsApplicationMixin(foundry.a
     const item = this.document.items.get(itemId);
     if (!item || item.type !== 'spell') return;
 
-    // Check if actor has mana
     const actor = this.document;
     if (!actor.system.mana || actor.system.mana.max === 0) {
       ui.notifications.warn("This character cannot cast spells (no mana pool).");
       return;
     }
 
-    // Open a dialog to choose casting options
     const deliveryCost = item.system.deliveryCost || 0;
     const hasDamage = item.system.damageBase && item.system.damageBase !== "";
     
@@ -435,14 +388,12 @@ export class VagabondCharacterSheet extends HandlebarsApplicationMixin(foundry.a
             const dealDamage = hasDamage ? form.dealDamage?.checked : false;
             const damageDice = hasDamage && dealDamage ? parseInt(form.damageDice.value) : 0;
             
-            // Calculate mana cost
             const deliveryCosts = {
               touch: 0, remote: 0, imbue: 0,
               cube: 1, aura: 2, cone: 2, glyph: 2, line: 2, sphere: 2
             };
             const manaCost = deliveryCosts[delivery] + (damageDice * 2);
             
-            // Validate mana
             if (manaCost > actor.system.mana.value) {
               ui.notifications.warn(`Not enough mana! Need ${manaCost}, have ${actor.system.mana.value}`);
               return;
@@ -453,7 +404,6 @@ export class VagabondCharacterSheet extends HandlebarsApplicationMixin(foundry.a
               return;
             }
             
-            // Cast the spell using the item's cast method
             await item.cast({
               delivery: delivery,
               dealDamage: dealDamage,
@@ -471,27 +421,76 @@ export class VagabondCharacterSheet extends HandlebarsApplicationMixin(foundry.a
     }).render(true);
   }
 
-  /**
-   * Take a rest
-   */
   static async _onRest(event, target) {
     event.preventDefault();
     await this.document.rest(true);
   }
 
-  /**
-   * Take a breather
-   */
   static async _onBreather(event, target) {
     event.preventDefault();
     await this.document.breather();
   }
 
-  /**
-   * Spend luck
-   */
   static async _onSpendLuck(event, target) {
     event.preventDefault();
     await this.document.spendLuck(1);
+  }
+
+  /**
+   * Toggle biography editor - Simple version with backup value system
+   */
+  static async _onToggleEditor(event, target) {
+    event.preventDefault();
+    
+    const fieldName = target.dataset.target;
+    const editorContainer = target.closest('.editor-container');
+    const contentDiv = editorContainer.querySelector('.editor-content');
+    const button = editorContainer.querySelector('.editor-edit');
+    
+    const textarea = contentDiv.querySelector('textarea');
+    const isEditing = textarea !== null;
+    
+    if (isEditing) {
+      // Save mode - get value with backup fallback
+      let newContent = textarea.value;
+      if (!newContent && textarea.dataset.backupValue) {
+        newContent = textarea.dataset.backupValue;
+      }
+      
+      // Update document
+      await this.document.update({ [fieldName]: newContent });
+      
+      // Enrich and display
+      const enriched = await foundry.applications.ux.TextEditor.enrichHTML(newContent, {
+        secrets: this.document.isOwner,
+        relativeTo: this.document
+      });
+      
+      contentDiv.innerHTML = enriched || '<p class="hint">No biography yet.</p>';
+      button.innerHTML = '<i class="fas fa-edit"></i> Edit';
+      
+    } else {
+      // Edit mode - create textarea
+      const currentContent = foundry.utils.getProperty(this.document, fieldName) || "";
+      
+      const textarea = document.createElement('textarea');
+      textarea.name = fieldName;
+      textarea.rows = 20;
+      textarea.style.cssText = 'width: 100%; font-family: monospace; padding: 8px;';
+      textarea.value = currentContent;
+      
+      // Store backup value on every input change
+      textarea.addEventListener('input', (e) => {
+        e.target.dataset.backupValue = e.target.value;
+      });
+      
+      contentDiv.innerHTML = '';
+      contentDiv.appendChild(textarea);
+      
+      button.innerHTML = '<i class="fas fa-save"></i> Save';
+      
+      textarea.focus();
+      textarea.setSelectionRange(textarea.value.length, textarea.value.length);
+    }
   }
 }
