@@ -11,47 +11,47 @@ A game system for running Vagabond RPG campaigns in Foundry Virtual Tabletop (v1
 
 ## Current Implementation Status
 
-### ✅ Completed
+### âœ… Completed
 
 #### Core System Architecture
-- ✅ Basic system structure with v13 ApplicationV2 architecture
-- ✅ Core data models for Characters and NPCs
-- ✅ System configuration and constants (config.mjs)
-- ✅ Localization framework (English)
-- ✅ CSS styling matching Vagabond RPG book aesthetic
+- âœ… Basic system structure with v13 ApplicationV2 architecture
+- âœ… Core data models for Characters and NPCs
+- âœ… System configuration and constants (config.mjs)
+- âœ… Localization framework (English)
+- âœ… CSS styling matching Vagabond RPG book aesthetic
 
 #### Character System
-- ✅ Stats system (6 stats: Might, Dexterity, Awareness, Reason, Presence, Luck)
-- ✅ Skills with training system (14 skills)
-- ✅ Saves calculation (Endure, Reflex, Will)
-- ✅ HP calculation (Might × Level for characters)
-- ✅ Speed calculation based on Dexterity
-- ✅ Inventory slots system (8 + Might)
-- ✅ Luck pool system
-- ✅ Rest and Breather mechanics
-- ✅ Character sheet with all tabs (Stats, Skills, Inventory, Biography)
-- ✅ Manual form handling with auto-save
+- âœ… Stats system (6 stats: Might, Dexterity, Awareness, Reason, Presence, Luck)
+- âœ… Skills with training system (14 skills)
+- âœ… Saves calculation (Endure, Reflex, Will)
+- âœ… HP calculation (Might Ã— Level for characters)
+- âœ… Speed calculation based on Dexterity
+- âœ… Inventory slots system (8 + Might)
+- âœ… Luck pool system
+- âœ… Rest and Breather mechanics
+- âœ… Character sheet with all tabs (Stats, Skills, Inventory, Biography)
+- âœ… Manual form handling with auto-save
 
 #### Item System
-- ✅ Item templates for all 7 types (weapon, armor, gear, spell, perk, class, ancestry)
-- ✅ Item document class with derived data
-- ✅ **Weapon sheet** - Complete with 11 properties, damage die, range, grip
-- ✅ **Armor sheet** - Complete with type selection, rating, might requirement
-- ✅ Item sheet with dynamic template routing
-- ✅ Auto-save functionality (300ms debounce)
-- ✅ Rich text description editor
+- âœ… Item templates for all 7 types (weapon, armor, gear, spell, perk, class, ancestry)
+- âœ… Item document class with derived data
+- âœ… **Weapon sheet** - Complete with 11 properties, damage die, range, grip
+- âœ… **Armor sheet** - Complete with type selection, rating, might requirement
+- âœ… Item sheet with dynamic template routing
+- âœ… Auto-save functionality (300ms debounce)
+- âœ… Rich text description editor
 
 #### NPC System
-- ✅ NPC data model with Hit Dice, zones, morale
-- ✅ NPC sheet with stats and description
+- âœ… NPC data model with Hit Dice, zones, morale
+- âœ… NPC sheet with stats and description
 
 #### Mechanics
-- ✅ Check rolling with Favor/Hinder
-- ✅ Difficulty calculation (20 - Stat × 2 if trained)
-- ✅ Damage rolling for weapons
-- ✅ Spell casting framework
+- âœ… Check rolling with Favor/Hinder
+- âœ… Difficulty calculation (20 - Stat Ã— 2 if trained)
+- âœ… Damage rolling for weapons
+- âœ… Spell casting framework
 
-### 🚧 In Progress / To Do
+### ðŸš§ In Progress / To Do
 
 #### High Priority
 
@@ -106,46 +106,46 @@ A game system for running Vagabond RPG campaigns in Foundry Virtual Tabletop (v1
    - [ ] Random encounter system
    - [ ] Downtime activities
    - [ ] Inventory weight visualization
-   - [ ] Wealth conversion helpers (gold ↔ silver ↔ copper)
+   - [ ] Wealth conversion helpers (gold â†” silver â†” copper)
    - [ ] Drag and drop item reordering
 
 ## File Structure
 
 ```
 vagabond/
-├── system.json              # System manifest
-├── template.json            # Data model definitions
-├── module/
-│   ├── vagabond.mjs        # Main entry point
-│   ├── config.mjs          # System constants
-│   ├── documents/
-│   │   ├── actor.mjs       # Actor document class ✅
-│   │   └── item.mjs        # Item document class ✅
-│   └── sheets/
-│       ├── character-sheet.mjs  # Character sheet ✅
-│       ├── npc-sheet.mjs        # NPC sheet ✅
-│       └── item-sheet.mjs       # Item sheet ✅
-├── templates/
-│   ├── actor/
-│   │   ├── character-sheet.hbs  # Character sheet ✅
-│   │   └── npc-sheet.hbs        # NPC sheet ✅
-│   └── item/
-│       ├── weapon-sheet.hbs     # Weapon sheet ✅
-│       ├── armor-sheet.hbs      # Armor sheet ✅
-│       └── item-sheet.hbs       # Generic fallback
-├── styles/
-│   └── vagabond.css        # Complete styling ✅
-└── lang/
-    └── en.json            # English localization ✅
+â”œâ”€â”€ system.json              # System manifest
+â”œâ”€â”€ template.json            # Data model definitions
+â”œâ”€â”€ module/
+â”‚   â”œâ”€â”€ vagabond.mjs        # Main entry point
+â”‚   â”œâ”€â”€ config.mjs          # System constants
+â”‚   â”œâ”€â”€ documents/
+â”‚   â”‚   â”œâ”€â”€ actor.mjs       # Actor document class âœ…
+â”‚   â”‚   â””â”€â”€ item.mjs        # Item document class âœ…
+â”‚   â””â”€â”€ sheets/
+â”‚       â”œâ”€â”€ character-sheet.mjs  # Character sheet âœ…
+â”‚       â”œâ”€â”€ npc-sheet.mjs        # NPC sheet âœ…
+â”‚       â””â”€â”€ item-sheet.mjs       # Item sheet âœ…
+â”œâ”€â”€ templates/
+â”‚   â”œâ”€â”€ actor/
+â”‚   â”‚   â”œâ”€â”€ character-sheet.hbs  # Character sheet âœ…
+â”‚   â”‚   â””â”€â”€ npc-sheet.hbs        # NPC sheet âœ…
+â”‚   â””â”€â”€ item/
+â”‚       â”œâ”€â”€ weapon-sheet.hbs     # Weapon sheet âœ…
+â”‚       â”œâ”€â”€ armor-sheet.hbs      # Armor sheet âœ…
+â”‚       â””â”€â”€ item-sheet.hbs       # Generic fallback
+â”œâ”€â”€ styles/
+â”‚   â””â”€â”€ vagabond.css        # Complete styling âœ…
+â””â”€â”€ lang/
+    â””â”€â”€ en.json            # English localization âœ…
 ```
 
 ## Key Mechanics Implementation
 
 ### Check System
-Checks use the formula: `Difficulty = 20 - (Stat × 2 if Trained)`
+Checks use the formula: `Difficulty = 20 - (Stat Ã— 2 if Trained)`
 - Roll d20 vs Difficulty
 - Natural 20 = Crit
-- Roll ≥ Difficulty = Pass
+- Roll â‰¥ Difficulty = Pass
 - Roll < Difficulty = Fail
 - Favor adds +d6, Hinder adds -d6
 
@@ -159,25 +159,25 @@ All stats range from 2-7 and are used to calculate:
 - **Luck**: Luck Pool (spent for advantages)
 
 ### Derived Values
-- **Max HP**: Might × Level
+- **Max HP**: Might Ã— Level
 - **Inventory Slots**: 8 + Might
 - **Speed**: 25/30/35 ft based on Dexterity (2-3/4-5/6-7)
 - **Saves**: Calculated from stat combinations
-- **Mana Spend Limit**: Casting Stat + (Level ÷ 2)
+- **Mana Spend Limit**: Casting Stat + (Level Ã· 2)
 
 ### Weapon Properties
 All 11 weapon properties from Vagabond RPG:
-- **Brawl**: Can use Brawl skill
-- **Brutal**: Crits on 19-20
-- **Cleave**: Hit adjacent foe on crit
-- **Entangle**: Can restrain targets
-- **Finesse**: Can use Finesse skill
-- **Keen**: +1 damage on hit
-- **Long**: 10ft reach
-- **Near**: Attacks at Near range
-- **Ranged**: Can use Ranged skill
-- **Shield**: +1 to Block
-- **Thrown**: Can be thrown
+- **Brawl**: Unarmed or improvised, can Grapple/Shove
+- **Brutal**: Crits deal +1 extra damage die
+- **Cleave**: Can deal half damage to two Targets
+- **Entangle**: Can Grapple
+- **Finesse**: Can attack with Finesse
+- **Keen**: Crit on 19 or 20; Attacks deal +1 die
+- **Long**: Its Range is 5 feet further
+- **Near**: Can only Target at Near
+- **Ranged**: Attacks with Ranged, Attacking a Close Target gets +1 Hinder
+- **Shield**: Ignores Hinder from Blocking Ranged Attacks, Can Shove
+- **Thrown**: Can be thrown at Near, or Far with Hinder
 
 ### Armor Types
 Three armor types with different characteristics:
@@ -241,12 +241,12 @@ The system follows the Vagabond RPG book aesthetic:
 ## Development Notes
 
 ### Recently Completed
-- ✅ Full weapon sheet with all 11 properties
-- ✅ Complete armor sheet with type selection and visual guidelines
-- ✅ Dynamic template routing for item sheets
-- ✅ Auto-save functionality across all sheets
-- ✅ Rich text editor integration
-- ✅ CSS styling for all implemented sheets
+- âœ… Full weapon sheet with all 11 properties
+- âœ… Complete armor sheet with type selection and visual guidelines
+- âœ… Dynamic template routing for item sheets
+- âœ… Auto-save functionality across all sheets
+- âœ… Rich text editor integration
+- âœ… CSS styling for all implemented sheets
 
 ### Next Development Steps
 
@@ -299,7 +299,7 @@ The system follows the Vagabond RPG book aesthetic:
 
 ## Known Issues
 
-None currently! 🎉
+None currently! ðŸŽ‰
 
 If you encounter issues:
 1. Check browser console (F12) for errors
@@ -319,7 +319,7 @@ Areas that need help:
 
 ## Roadmap
 
-### Phase 1: Core Items ✅ (COMPLETE)
+### Phase 1: Core Items âœ… (COMPLETE)
 - Character sheets
 - Weapon sheets
 - Armor sheets
@@ -348,7 +348,7 @@ Areas that need help:
 
 This system is unofficial and not affiliated with Land of the Blind, LLC.
 
-**Vagabond RPG** © 2024 Land of the Blind, LLC
+**Vagabond RPG** Â© 2024 Land of the Blind, LLC
 
 ## Credits
 
@@ -365,4 +365,4 @@ This system is unofficial and not affiliated with Land of the Blind, LLC.
 
 ---
 
-**Ready to play?** Create a world, make a character, and start your adventure in the Vagabond RPG! ⚔️🛡️
+**Ready to play?** Create a world, make a character, and start your adventure in the Vagabond RPG! âš”ï¸ðŸ›¡ï¸

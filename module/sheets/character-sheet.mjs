@@ -37,7 +37,9 @@ export class VagabondCharacterSheet extends HandlebarsApplicationMixin(foundry.a
     form: {
       submitOnChange: true,
       closeOnSubmit: false
-    }
+    },
+    // CRITICAL: Enable drag-drop at the application level
+    dragDrop: [{ dragSelector: ".item[data-item-id]", dropSelector: null }]
   };
 
   /** @override */
@@ -128,18 +130,13 @@ export class VagabondCharacterSheet extends HandlebarsApplicationMixin(foundry.a
     super._onRender(context, options);
 
     const html = this.element;
-    html.querySelectorAll('.item[data-item-id]').forEach(el => {
-      el.setAttribute('draggable', 'true');
-      el.addEventListener('dragstart', this._onDragStart.bind(this));
-    });
-
-    html.addEventListener('drop', this._onDrop.bind(this));
-    html.addEventListener('dragover', ev => ev.preventDefault());
-
+    
+    // Tab switching
     html.querySelectorAll('.tabs [data-tab]').forEach(tab => {
       tab.addEventListener('click', this._onChangeTab.bind(this));
     });
 
+    // Manual form handling
     const form = html.querySelector('form');
     if (form) {
       let submitTimeout;
@@ -191,33 +188,90 @@ export class VagabondCharacterSheet extends HandlebarsApplicationMixin(foundry.a
     });
   }
 
+  /**
+   * Handle drag start - uses Foundry's built-in DragDrop system
+   * @override
+   */
   _onDragStart(event) {
     const itemId = event.currentTarget.dataset.itemId;
     const item = this.document.items.get(itemId);
     if (!item) return;
 
-    event.dataTransfer.setData('text/plain', JSON.stringify({
-      type: 'Item',
-      uuid: item.uuid
-    }));
+    const dragData = item.toDragData();
+    event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
   }
 
+  /**
+   * Handle drop - uses Foundry's built-in DragDrop system
+   * This prevents duplicate creation by properly handling the drop
+   * @override
+   */
   async _onDrop(event) {
     event.preventDefault();
+    event.stopPropagation();
 
-    let data;
-    try {
-      data = JSON.parse(event.dataTransfer.getData('text/plain'));
-    } catch (err) {
+    const data = foundry.applications.ux.TextEditor.getDragEventData(event);
+    
+    // Handle Item drops
+    if (data.type === "Item") {
+      return await this._onDropItem(event, data);
+    }
+    
+    // Let parent class handle other drop types
+    return super._onDrop(event);
+  }
+
+  /**
+   * Handle dropping an Item onto the Actor
+   * @param {DragEvent} event
+   * @param {Object} data
+   * @private
+   */
+  async _onDropItem(event, data) {
+    if (!this.document.isOwner) return false;
+
+    const item = await Item.implementation.fromDropData(data);
+    
+    // Check if the item is already owned by this actor
+    if (item.parent?.uuid === this.document.uuid) {
+      // Item is already on this actor - just reorder or do nothing
+      console.log("Item already on this actor, skipping duplicate creation");
       return false;
     }
 
-    if (data.type === 'Item') {
-      const item = await fromUuid(data.uuid);
-      if (!item) return;
+    // Create the item on this actor
+    const itemData = item.toObject();
+    
+    // Handle different item types
+    return await this._onDropItemCreate(itemData);
+  }
 
-      return this.document.createEmbeddedDocuments('Item', [item.toObject()]);
+  /**
+   * Create a new Item on the Actor
+   * @param {Object} itemData
+   * @private
+   */
+  async _onDropItemCreate(itemData) {
+    // Prevent duplicates by checking if an identical item was just created
+    const existingItems = this.document.items.filter(i => 
+      i.name === itemData.name && 
+      i.type === itemData.type
+    );
+    
+    // If there's already an item with this exact name and type,
+    // and it was created in the last second, skip creation
+    if (existingItems.length > 0) {
+      const mostRecent = existingItems[existingItems.length - 1];
+      const timeSinceCreation = Date.now() - mostRecent._stats.createdTime;
+      
+      if (timeSinceCreation < 1000) {
+        console.log("Preventing duplicate item creation");
+        return false;
+      }
     }
+
+    // Create the item
+    return await this.document.createEmbeddedDocuments("Item", [itemData]);
   }
 
   static _onEditImage(event, target) {

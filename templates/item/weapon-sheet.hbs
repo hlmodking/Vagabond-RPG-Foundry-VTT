@@ -2,7 +2,7 @@
   
   {{!-- Sheet Header --}}
   <header class="sheet-header">
-    <img class="profile" src="{{item.img}}" data-action="editImage" title="Click to change image" alt="{{item.name}}"/>
+    <img class="profile" src="{{item.img}}" data-action="showImage" title="{{item.name}}" alt="{{item.name}}"/>
     
     <div class="header-details flexcol">
       <h1 class="charname">
@@ -72,67 +72,67 @@
       <label class="property-checkbox">
         <input type="checkbox" name="system.properties" value="brawl" {{checked (includes system.properties "brawl")}}/>
         <span class="property-name">Brawl</span>
-        <span class="property-desc">Can use Brawl skill</span>
+        <span class="property-desc">Unarmed or improvised, can Grapple/Shove</span>
       </label>
       
       <label class="property-checkbox">
         <input type="checkbox" name="system.properties" value="brutal" {{checked (includes system.properties "brutal")}}/>
         <span class="property-name">Brutal</span>
-        <span class="property-desc">Crits on 19-20</span>
+        <span class="property-desc">Crits deal +1 extra damage die</span>
       </label>
       
       <label class="property-checkbox">
         <input type="checkbox" name="system.properties" value="cleave" {{checked (includes system.properties "cleave")}}/>
         <span class="property-name">Cleave</span>
-        <span class="property-desc">Hit adjacent foe on crit</span>
+        <span class="property-desc">Can deal half damage to two Targets</span>
       </label>
       
       <label class="property-checkbox">
         <input type="checkbox" name="system.properties" value="entangle" {{checked (includes system.properties "entangle")}}/>
         <span class="property-name">Entangle</span>
-        <span class="property-desc">Can restrain targets</span>
+        <span class="property-desc">Can Grapple</span>
       </label>
       
       <label class="property-checkbox">
         <input type="checkbox" name="system.properties" value="finesse" {{checked (includes system.properties "finesse")}}/>
         <span class="property-name">Finesse</span>
-        <span class="property-desc">Can use Finesse skill</span>
+        <span class="property-desc">Can attack with Finesse</span>
       </label>
       
       <label class="property-checkbox">
         <input type="checkbox" name="system.properties" value="keen" {{checked (includes system.properties "keen")}}/>
         <span class="property-name">Keen</span>
-        <span class="property-desc">+1 damage on hit</span>
+        <span class="property-desc">Crit on 19 or 20; Attacks deal +1 die</span>
       </label>
       
       <label class="property-checkbox">
         <input type="checkbox" name="system.properties" value="long" {{checked (includes system.properties "long")}}/>
         <span class="property-name">Long</span>
-        <span class="property-desc">10ft reach</span>
+        <span class="property-desc">Its Range is 5 feet further</span>
       </label>
       
       <label class="property-checkbox">
         <input type="checkbox" name="system.properties" value="near" {{checked (includes system.properties "near")}}/>
         <span class="property-name">Near</span>
-        <span class="property-desc">Attacks at Near range</span>
+        <span class="property-desc">Can only Target at Near</span>
       </label>
       
       <label class="property-checkbox">
         <input type="checkbox" name="system.properties" value="ranged" {{checked (includes system.properties "ranged")}}/>
         <span class="property-name">Ranged</span>
-        <span class="property-desc">Can use Ranged skill</span>
+        <span class="property-desc">Attacks with Ranged, Attacking a Close Target gets +1 Hinder</span>
       </label>
       
       <label class="property-checkbox">
         <input type="checkbox" name="system.properties" value="shield" {{checked (includes system.properties "shield")}}/>
         <span class="property-name">Shield</span>
-        <span class="property-desc">+1 Armor when equipped</span>
+        <span class="property-desc">Ignores Hinder from Blocking Ranged Attacks, Can Shove</span>
       </label>
       
       <label class="property-checkbox">
         <input type="checkbox" name="system.properties" value="thrown" {{checked (includes system.properties "thrown")}}/>
         <span class="property-name">Thrown</span>
-        <span class="property-desc">Can be thrown at Near range</span>
+        <span class="property-desc">Can be thrown at Near, or Far with Hinder</span>
       </label>
     </div>
     
@@ -172,15 +172,8 @@
     </div>
     
     <h3>Description</h3>
-    <div class="editor-container">
-      <div class="editor-content" data-edit="system.description">
-        {{{enrichedDescription}}}
-      </div>
-      {{#if editable}}
-      <button type="button" class="editor-edit" data-action="toggleEditor" data-target="system.description">
-        <i class="fas fa-edit"></i> Edit
-      </button>
-      {{/if}}
+    <div class="editor">
+      {{editor enrichedDescription target="system.description" button=true editable=editable}}
     </div>
 
   </section>

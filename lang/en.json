@@ -92,16 +92,27 @@
     
     "WeaponProperties": {
       "Brawl": "Brawl",
+      "BrawlDesc": "Unarmed or improvised, can Grapple/Shove",
       "Brutal": "Brutal",
+      "BrutalDesc": "Crits deal +1 extra damage die",
       "Cleave": "Cleave",
+      "CleaveDesc": "Can deal half damage to two Targets",
       "Entangle": "Entangle",
+      "EntangleDesc": "Can Grapple",
       "Finesse": "Finesse",
+      "FinesseDesc": "Can attack with Finesse",
       "Keen": "Keen",
+      "KeenDesc": "Crit on 19 or 20; Attacks deal +1 die",
       "Long": "Long",
+      "LongDesc": "Its Range is 5 feet further",
       "Near": "Near",
+      "NearDesc": "Can only Target at Near",
       "Ranged": "Ranged",
+      "RangedDesc": "Attacks with Ranged, Attacking a Close Target gets +1 Hinder",
       "Shield": "Shield",
-      "Thrown": "Thrown"
+      "ShieldDesc": "Ignores Hinder from Blocking Ranged Attacks, Can Shove",
+      "Thrown": "Thrown",
+      "ThrownDesc": "Can be thrown at Near, or Far with Hinder"
     },
     
     "WeaponGrips": {
