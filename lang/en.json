@@ -39,7 +39,9 @@
       "PresenceAbbr": "PRS",
       "LuckAbbr": "LUK"
     },
-    
+
+    "StatsLabel": "Stats",
+
     "Skills": {
       "Melee": "Melee",
       "Brawl": "Brawl",
@@ -141,7 +143,19 @@
       "HD": "Hit Dice",
       "Morale": "Morale",
       "Zone": "Zone",
-      "Appearing": "# Appearing"
+      "Appearing": "# Appearing",
+      "TL": "TL",
+      "Speed": "Speed",
+      "Armor": "Armor",
+      "Actions": "Actions",
+      "Abilities": "Abilities",
+      "Type": "Type",
+      "Size": "Size",
+      "HitPoints": "Hit Points",
+      "Senses": "Senses",
+      "Weak": "Weak To",
+      "Immune": "Immune To",
+      "Notes": "Notes"
     },
     
     "Size": {

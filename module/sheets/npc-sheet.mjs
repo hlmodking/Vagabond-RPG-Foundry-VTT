@@ -13,7 +13,11 @@ export class VagabondNPCSheet extends HandlebarsApplicationMixin(foundry.applica
             height: 700
         },
         actions: {
-            toggleEditor: VagabondNPCSheet._onToggleEditor
+            toggleEditor: VagabondNPCSheet._onToggleEditor,
+            addAction: VagabondNPCSheet._onAddAction,
+            removeAction: VagabondNPCSheet._onRemoveAction,
+            addAbility: VagabondNPCSheet._onAddAbility,
+            removeAbility: VagabondNPCSheet._onRemoveAbility
         },
         window: {
             resizable: true
@@ -32,8 +36,23 @@ export class VagabondNPCSheet extends HandlebarsApplicationMixin(foundry.applica
         context.config = CONFIG.VAGABOND;
         context.editable = this.isEditable;
 
+        context.system.actions ??= [];
+        context.system.abilities ??= [];
+
+        if (Array.isArray(context.system.senses)) {
+            context.system.senses = context.system.senses.join(", ");
+        }
+
+        if (Array.isArray(context.system.weak)) {
+            context.system.weak = context.system.weak.join(", ");
+        }
+
+        if (Array.isArray(context.system.immune)) {
+            context.system.immune = context.system.immune.join(", ");
+        }
+
         context.enrichedBiography = await foundry.applications.ux.TextEditor.enrichHTML(
-            this.document.system.biography || "", 
+            this.document.system.biography || "",
             {
                 secrets: this.document.isOwner,
                 relativeTo: this.document
@@ -94,5 +113,47 @@ export class VagabondNPCSheet extends HandlebarsApplicationMixin(foundry.applica
             textarea.focus();
             textarea.setSelectionRange(textarea.value.length, textarea.value.length);
         }
+    }
+
+    static async _onAddAction(event) {
+        event.preventDefault();
+
+        const actions = Array.from(this.document.system.actions ?? []);
+        actions.push({ name: "", tags: "", effect: "" });
+
+        await this.document.update({ "system.actions": actions });
+    }
+
+    static async _onRemoveAction(event, target) {
+        event.preventDefault();
+
+        const index = Number(target.dataset.index);
+        if (Number.isNaN(index)) return;
+
+        const actions = Array.from(this.document.system.actions ?? []);
+        actions.splice(index, 1);
+
+        await this.document.update({ "system.actions": actions });
+    }
+
+    static async _onAddAbility(event) {
+        event.preventDefault();
+
+        const abilities = Array.from(this.document.system.abilities ?? []);
+        abilities.push({ name: "", description: "" });
+
+        await this.document.update({ "system.abilities": abilities });
+    }
+
+    static async _onRemoveAbility(event, target) {
+        event.preventDefault();
+
+        const index = Number(target.dataset.index);
+        if (Number.isNaN(index)) return;
+
+        const abilities = Array.from(this.document.system.abilities ?? []);
+        abilities.splice(index, 1);
+
+        await this.document.update({ "system.abilities": abilities });
     }
 }

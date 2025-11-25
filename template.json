@@ -106,11 +106,13 @@
           "base": 30,
           "current": 30,
           "crawl": 90,
-          "travel": 6
+          "travel": 6,
+          "note": ""
         },
         "armor": {
           "value": 0,
-          "type": "none"
+          "type": "none",
+          "note": ""
         },
         "size": "medium",
         "biography": ""
@@ -146,14 +148,16 @@
     },
     "npc": {
       "templates": ["base"],
+      "tl": 1,
       "hd": 1,
       "zone": "frontline",
       "morale": 8,
       "appearing": "1",
       "actions": [],
-      "weak": [],
-      "immune": [],
-      "senses": [],
+      "abilities": [],
+      "weak": "",
+      "immune": "",
+      "senses": "",
       "type": "humanlike"
     }
   },

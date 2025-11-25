@@ -1,17 +1,23 @@
 <form class="{{cssClass}} flexcol" autocomplete="off">
-  
+
   {{!-- Sheet Header --}}
-  <header class="sheet-header">
+  <header class="sheet-header npc-header">
     <img class="profile" src="{{actor.img}}" data-action="editImage" title="Click to change image" alt="{{actor.name}}"/>
-    
+
     <div class="header-details flexcol">
-      <h1 class="charname">
-        <input name="name" type="text" value="{{actor.name}}" placeholder="NPC Name"/>
-      </h1>
-      
+      <div class="name-row flexrow">
+        <h1 class="charname">
+          <input name="name" type="text" value="{{actor.name}}" placeholder="NPC Name"/>
+        </h1>
+        <div class="header-field tl-field">
+          <label>{{localize "VAGABOND.NPC.TL"}}</label>
+          <input type="number" name="system.tl" value="{{system.tl}}" step="0.1" data-dtype="Number" min="0"/>
+        </div>
+      </div>
+
       <div class="header-fields flexrow">
         <div class="header-field">
-          <label>{{localize "VAGABOND.BeingType.Humanlike"}}</label>
+          <label>{{localize "VAGABOND.NPC.Type"}}</label>
           <select name="system.type">
             {{#select system.type}}
             {{#each config.beingTypes as |label key|}}
@@ -20,9 +26,9 @@
             {{/select}}
           </select>
         </div>
-        
+
         <div class="header-field">
-          <label>{{localize "VAGABOND.Size.Medium"}}</label>
+          <label>{{localize "VAGABOND.NPC.Size"}}</label>
           <select name="system.size">
             {{#select system.size}}
             {{#each config.sizes as |label key|}}
@@ -31,27 +37,8 @@
             {{/select}}
           </select>
         </div>
-        
+
         <div class="header-field">
-          <label>{{localize "VAGABOND.NPC.HD"}}</label>
-          <input type="number" name="system.hd" value="{{system.hd}}" data-dtype="Number" min="1"/>
-        </div>
-      </div>
-      
-      <div class="resources flexrow">
-        <div class="resource hp">
-          <label>{{localize "VAGABOND.Combat.HP"}}</label>
-          <input type="number" name="system.hp.value" value="{{system.hp.value}}" data-dtype="Number" min="0"/>
-          <span class="sep">/</span>
-          <span class="max">{{system.hp.max}}</span>
-        </div>
-        
-        <div class="resource">
-          <label>{{localize "VAGABOND.NPC.Morale"}}</label>
-          <input type="number" name="system.morale" value="{{system.morale}}" data-dtype="Number" min="2" max="12"/>
-        </div>
-        
-        <div class="resource">
           <label>{{localize "VAGABOND.NPC.Zone"}}</label>
           <select name="system.zone">
             {{#select system.zone}}
@@ -61,19 +48,87 @@
             {{/select}}
           </select>
         </div>
-        
-        <div class="resource">
-          <label>Armor</label>
-          <input type="number" name="system.armor.value" value="{{system.armor.value}}" data-dtype="Number" min="0"/>
+
+        <div class="header-field">
+          <label>{{localize "VAGABOND.NPC.Morale"}}</label>
+          <input type="number" name="system.morale" value="{{system.morale}}" data-dtype="Number" min="2" max="12"/>
         </div>
       </div>
     </div>
   </header>
 
   {{!-- Sheet Body --}}
-  <section class="sheet-body">
-    
-    <h2>Stats</h2>
+  <section class="sheet-body npc-body">
+
+    <div class="npc-overview">
+      <div class="npc-line">
+        <div class="resource">
+          <label>{{localize "VAGABOND.NPC.HD"}}</label>
+          <div class="inline-field">
+            <input type="number" name="system.hd" value="{{system.hd}}" data-dtype="Number" min="1"/>
+            <span class="hint">({{system.hp.max}} {{localize "VAGABOND.Combat.HP"}})</span>
+          </div>
+        </div>
+
+        <div class="resource hp">
+          <label>{{localize "VAGABOND.NPC.HitPoints"}}</label>
+          <div class="inline-field">
+            <input type="number" name="system.hp.value" value="{{system.hp.value}}" data-dtype="Number" min="0"/>
+            <span class="sep">/</span>
+            <span class="max">{{system.hp.max}}</span>
+          </div>
+        </div>
+
+        <div class="resource">
+          <label>{{localize "VAGABOND.NPC.Speed"}}</label>
+          <div class="inline-field">
+            <input type="number" name="system.speed.base" value="{{system.speed.base}}" data-dtype="Number" min="0"/>
+            <span class="hint">ft.</span>
+            <input type="text" name="system.speed.note" value="{{system.speed.note}}" placeholder="(Swim 20')"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="npc-line">
+        <div class="resource">
+          <label>{{localize "VAGABOND.NPC.Appearing"}}</label>
+          <input type="text" name="system.appearing" value="{{system.appearing}}" placeholder="1d6"/>
+        </div>
+
+        <div class="resource">
+          <label>{{localize "VAGABOND.NPC.Armor"}}</label>
+          <div class="inline-field">
+            <input type="number" name="system.armor.value" value="{{system.armor.value}}" data-dtype="Number" min="0"/>
+            <select name="system.armor.type">
+              {{#select system.armor.type}}
+              <option value="none">-</option>
+              {{#each config.armorTypes as |label key|}}
+              <option value="{{key}}">{{localize label}}</option>
+              {{/each}}
+              {{/select}}
+            </select>
+            <input type="text" name="system.armor.note" value="{{system.armor.note}}" placeholder="[as Leather]"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="npc-line">
+        <div class="resource">
+          <label>{{localize "VAGABOND.NPC.Senses"}}</label>
+          <input type="text" name="system.senses" value="{{system.senses}}" placeholder="Blindsight 60', Blood Sense"/>
+        </div>
+        <div class="resource">
+          <label>{{localize "VAGABOND.NPC.Weak"}}</label>
+          <input type="text" name="system.weak" value="{{system.weak}}" placeholder="Fire"/>
+        </div>
+        <div class="resource">
+          <label>{{localize "VAGABOND.NPC.Immune"}}</label>
+          <input type="text" name="system.immune" value="{{system.immune}}" placeholder="Poison"/>
+        </div>
+      </div>
+    </div>
+
+    <h2>{{localize "VAGABOND.StatsLabel"}}</h2>
     <div class="stats-grid">
       {{#each system.stats as |stat key|}}
       <div class="stat" data-stat="{{key}}">
@@ -82,22 +137,70 @@
       </div>
       {{/each}}
     </div>
-    
-    <h2>Actions</h2>
-    <div class="editor">
-      <textarea name="system.actions" rows="6">{{system.actions}}</textarea>
-    </div>
-    
-    <h2>Description</h2>
-    <div class="editor-container">
-      <div class="editor-content" data-edit="system.biography">
-        {{{enrichedBiography}}}
+
+    <div class="npc-section">
+      <div class="section-header">
+        <h2>{{localize "VAGABOND.NPC.Actions"}}</h2>
+        <button type="button" data-action="addAction" class="icon-only" title="Add Action"><i class="fas fa-plus"></i></button>
       </div>
-      {{#if editable}}
-      <button type="button" class="editor-edit" data-action="toggleEditor" data-target="system.biography">
-        <i class="fas fa-edit"></i> Edit
-      </button>
-      {{/if}}
+      <div class="section-body">
+        {{#if system.actions.length}}
+          {{#each system.actions as |action index|}}
+          <div class="list-entry">
+            <div class="entry-top">
+              <input type="text" name="system.actions.{{index}}.name" value="{{action.name}}" placeholder="Hoof"/>
+              <input type="text" name="system.actions.{{index}}.tags" value="{{action.tags}}" placeholder="[Melee Attack]"/>
+              <button type="button" data-action="removeAction" data-index="{{index}}" class="icon-only" title="Remove Action">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+            <textarea name="system.actions.{{index}}.effect" rows="2" placeholder="3 (d6)">{{action.effect}}</textarea>
+          </div>
+          {{/each}}
+        {{else}}
+          <p class="hint">Add attacks or maneuvers the creature can take.</p>
+        {{/if}}
+      </div>
+    </div>
+
+    <div class="npc-section">
+      <div class="section-header">
+        <h2>{{localize "VAGABOND.NPC.Abilities"}}</h2>
+        <button type="button" data-action="addAbility" class="icon-only" title="Add Ability"><i class="fas fa-plus"></i></button>
+      </div>
+      <div class="section-body">
+        {{#if system.abilities.length}}
+          {{#each system.abilities as |ability index|}}
+          <div class="list-entry">
+            <div class="entry-top">
+              <input type="text" name="system.abilities.{{index}}.name" value="{{ability.name}}" placeholder="Pack Hunter"/>
+              <button type="button" data-action="removeAbility" data-index="{{index}}" class="icon-only" title="Remove Ability">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+            <textarea name="system.abilities.{{index}}.description" rows="2" placeholder="Describe the special rule.">{{ability.description}}</textarea>
+          </div>
+          {{/each}}
+        {{else}}
+          <p class="hint">Call out special rules like Pack Hunter or Amphibious.</p>
+        {{/if}}
+      </div>
+    </div>
+
+    <div class="npc-section">
+      <div class="section-header">
+        <h2>{{localize "VAGABOND.NPC.Notes"}}</h2>
+      </div>
+      <div class="editor-container">
+        <div class="editor-content" data-edit="system.biography">
+          {{{enrichedBiography}}}
+        </div>
+        {{#if editable}}
+        <button type="button" class="editor-edit" data-action="toggleEditor" data-target="system.biography">
+          <i class="fas fa-edit"></i> Edit
+        </button>
+        {{/if}}
+      </div>
     </div>
 
   </section>
