@@ -436,7 +436,7 @@
     flex-direction: column;
     align-items: center;
     padding: var(--spacing-md);
-    background: white;
+    background: rgb(255, 255, 255);
     border: 2px solid var(--color-primary);
     border-radius: 0;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -1229,114 +1229,376 @@
   /* NPC Sheet            */
   /* ==================== */
 
-  .vagabond.sheet .inline-field {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    flex-wrap: wrap;
+  .vagabond.sheet.actor.npc {
+    --npc-bg: #fdf9f0;
+    --npc-border: #1f1f1f;
+    --npc-muted: #6b6b6b;
   }
 
-  .vagabond.sheet.actor.npc .npc-header .name-row {
+  .vagabond.sheet.actor.npc .window-content {
+    background: var(--npc-bg);
+  }
+
+  .vagabond.sheet.actor.npc .sheet-header {
+    padding: var(--spacing-md) var(--spacing-lg) var(--spacing-sm) 48px;
+    border: none;
+    border-bottom: 3px solid var(--npc-border);
+    background: linear-gradient(180deg, #f5f1e8 0%, #faf5e9 100%);
+    align-items: flex-start;
+    gap: var(--spacing-md);
+  }
+
+  .vagabond.sheet.actor.npc .profile {
+    width: 72px;
+    height: 72px;
+    border: 2px solid var(--npc-border);
+    box-shadow: none;
+    background: #f1eadc;
+  }
+
+  .vagabond.sheet.actor.npc .profile:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .vagabond.sheet.actor.npc .profile::before {
+    opacity: 0.25;
+  }
+
+  .vagabond.sheet.actor.npc .sheet-body {
+    padding: 0;
+    background: var(--npc-bg);
+  }
+
+  .vagabond.sheet.actor.npc .npc-statblock {
+    padding: var(--spacing-md) var(--spacing-lg) var(--spacing-lg) 48px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .vagabond.sheet.actor.npc .title-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    width: 100%;
+  }
+
+  .vagabond.sheet.actor.npc .name-row {
+    display: flex;
     align-items: flex-end;
     gap: var(--spacing-md);
   }
 
-  .vagabond.sheet.actor.npc .tl-field {
-    min-width: 120px;
+  .vagabond.sheet.actor.npc .npc-name {
+    flex: 1;
+    font-family: var(--font-headers);
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: none;
+    border-bottom: 2px solid var(--npc-border);
+    background: transparent;
+    padding: 0 0 4px 0;
   }
 
-  .vagabond.sheet.actor.npc .npc-body {
+  .vagabond.sheet.actor.npc .npc-name:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  .vagabond.sheet.actor.npc .tl-chip {
     display: flex;
-    flex-direction: column;
-    gap: var(--spacing-md);
-    padding: var(--spacing-md);
-  }
-
-  .vagabond.sheet.actor.npc .npc-overview {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-md);
-    background: var(--color-bg-light);
-    border: 1px solid var(--color-border);
-    padding: var(--spacing-md);
-  }
-
-  .vagabond.sheet.actor.npc .npc-line {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: var(--spacing-md);
-  }
-
-  .vagabond.sheet.actor.npc .npc-line .resource {
-    background: white;
-    border: 1px solid var(--color-border);
-    padding: var(--spacing-sm);
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-xs);
-  }
-
-  .vagabond.sheet.actor.npc .npc-line .resource label {
+    align-items: center;
+    gap: 6px;
+    background: var(--npc-border);
+    color: white;
+    padding: 4px 8px;
     font-family: var(--font-headers);
     text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 0;
+  }
+
+  .vagabond.sheet.actor.npc .tl-chip input {
+    width: 60px;
+    background: transparent;
+    border: none;
+    color: white;
+    font-weight: 700;
+    text-align: center;
+    padding: 0;
+  }
+
+  .vagabond.sheet.actor.npc .tl-chip input:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  .vagabond.sheet.actor.npc .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+  }
+
+  .vagabond.sheet.actor.npc .tag-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    background: #1f1f1f;
+    color: white;
+    font-family: var(--font-headers);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .vagabond.sheet.actor.npc .tag-pill label {
+    margin: 0;
+    font-size: 11px;
+  }
+
+  .vagabond.sheet.actor.npc .tag-pill select {
+    background: transparent;
+    border: none;
+    color: white;
+    font-family: var(--font-primary);
+    font-size: 14px;
+    padding: 0;
+  }
+
+  .vagabond.sheet.actor.npc .tag-pill select:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  .vagabond.sheet.actor.npc .npc-flavor {
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--color-text);
+    background: #fffdf8;
+    border-left: 4px solid var(--npc-border);
+    padding: 8px 10px;
+    -webkit-line-clamp: 3;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .vagabond.sheet.actor.npc .npc-flavor.empty {
+    font-style: normal;
+    color: var(--color-text-light);
+  }
+
+  .vagabond.sheet.actor.npc .npc-flavor p {
+    margin: 0;
+  }
+
+  .vagabond.sheet.actor.npc .dotted-rule {
+    border-bottom: 2px dotted var(--npc-border);
+    margin: 0;
+    height: 2px;
+  }
+
+  .vagabond.sheet.actor.npc .dotted-rule.faint {
+    border-color: #b7b7b7;
+  }
+
+  .vagabond.sheet.actor.npc .statline {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .vagabond.sheet.actor.npc .stat-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 4px 14px;
+  }
+
+  .vagabond.sheet.actor.npc .stat-row.primary {
+    column-gap: 18px;
+  }
+
+  .vagabond.sheet.actor.npc .stat-row.secondary {
+    column-gap: 16px;
+  }
+
+  .vagabond.sheet.actor.npc .stat-block {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    padding: 0;
+    margin: 0;
+    flex: 0 0 auto;
+  }
+
+  .vagabond.sheet.actor.npc .stat-block label {
     font-size: 12px;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
+    color: var(--npc-border);
+    margin: 0;
+    font-weight: 800;
+    font-family: var(--font-headers);
+    text-transform: uppercase;
+  }
+
+  .vagabond.sheet.actor.npc .stat-block input,
+  .vagabond.sheet.actor.npc .stat-block select,
+  .vagabond.sheet.actor.npc .stat-item input,
+  .vagabond.sheet.actor.npc .stat-item select {
+    background: transparent;
+    border: 1px solid #cfcfcf;
+    padding: 2px 4px;
+    font-size: 13px;
+  }
+
+  .vagabond.sheet.actor.npc .stat-block input[type="number"],
+  .vagabond.sheet.actor.npc .stat-item input[type="number"] {
+    width: 52px;
+  }
+
+  .vagabond.sheet.actor.npc input[name="system.appearing"] {
+    width: 88px;
+    text-align: center;
+  }
+
+  .vagabond.sheet.actor.npc .stat-block input:focus,
+  .vagabond.sheet.actor.npc .stat-block select:focus,
+  .vagabond.sheet.actor.npc .stat-item input:focus,
+  .vagabond.sheet.actor.npc .stat-item select:focus {
+    outline: none;
+    box-shadow: none;
+    border-color: var(--npc-border);
+  }
+
+  .vagabond.sheet.actor.npc .stat-block .stat-value,
+  .vagabond.sheet.actor.npc .stat-item .stat-value {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .vagabond.sheet.actor.npc .stat-block .hint,
+  .vagabond.sheet.actor.npc .stat-item .hint {
+    color: var(--npc-muted);
+    font-size: 12px;
+  }
+
+  .vagabond.sheet.actor.npc .stat-block .hp-line,
+  .vagabond.sheet.actor.npc .stat-item .hp-line {
+    gap: 4px;
+  }
+
+  .vagabond.sheet.actor.npc .stat-block .max,
+  .vagabond.sheet.actor.npc .stat-item .max {
+    font-weight: 700;
+    color: var(--npc-border);
+  }
+
+  .vagabond.sheet.actor.npc .statline.muted {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 2px 10px;
+  }
+
+  .vagabond.sheet.actor.npc .statline.muted label {
+    color: var(--npc-muted);
+  }
+
+  .vagabond.sheet.actor.npc .stat-item {
+    display: grid;
+    gap: 1px;
+    background: none;
+    border: none;
+    padding: 0;
+    flex: 0 0 auto;
   }
 
   .vagabond.sheet.actor.npc .npc-section {
-    border: 1px solid var(--color-border);
-    background: var(--color-bg-light);
+    border: none;
+    background: transparent;
   }
 
   .vagabond.sheet.actor.npc .npc-section + .npc-section {
-    margin-top: var(--spacing-md);
+    margin-top: var(--spacing-sm);
   }
 
   .vagabond.sheet.actor.npc .npc-section .section-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--spacing-sm) var(--spacing-md);
-    background: var(--color-primary);
-    color: white;
+    padding: 0 0 var(--spacing-xs) 0;
+    background: transparent;
+    color: var(--npc-border);
+    border-bottom: 2px solid var(--npc-border);
   }
 
   .vagabond.sheet.actor.npc .npc-section .section-header h2 {
     margin: 0;
     padding: 0;
-    color: white;
+    color: var(--npc-border);
     background: transparent;
+    font-size: 14px;
+    letter-spacing: 1px;
   }
 
   .vagabond.sheet.actor.npc .npc-section .section-body {
-    padding: var(--spacing-md);
+    padding: var(--spacing-xs) 0 0 0;
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-md);
+    gap: var(--spacing-sm);
   }
 
   .vagabond.sheet.actor.npc .list-entry {
-    border: 1px solid var(--color-border);
+    border: 1px solid #d1d1d1;
     background: white;
     padding: var(--spacing-sm);
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-sm);
+    gap: var(--spacing-xs);
+  }
+
+  .vagabond.sheet.actor.npc .list-entry.compact {
+    padding: 8px;
   }
 
   .vagabond.sheet.actor.npc .entry-top {
     display: flex;
-    gap: var(--spacing-sm);
+    gap: var(--spacing-xs);
     align-items: center;
   }
 
-  .vagabond.sheet.actor.npc .entry-top input[type="text"] {
+  .vagabond.sheet.actor.npc .entry-top input {
     flex: 1;
+    border: 1px solid #cfcfcf;
+    background: #fdfbf7;
+    padding: 6px 8px;
+  }
+
+  .vagabond.sheet.actor.npc .entry-top input.tags {
+    max-width: 180px;
+  }
+
+  .vagabond.sheet.actor.npc .entry-top input:focus {
+    outline: none;
+    border-color: var(--npc-border);
   }
 
   .vagabond.sheet.actor.npc .list-entry textarea {
     width: 100%;
     min-height: 60px;
+    border: 1px solid #cfcfcf;
+    background: #fffdf7;
+    padding: 6px 8px;
+  }
+
+  .vagabond.sheet.actor.npc .list-entry textarea:focus {
+    outline: none;
+    border-color: var(--npc-border);
   }
 
   .vagabond.sheet.actor.npc .hint {
@@ -1345,7 +1607,24 @@
   }
 
   .vagabond.sheet.actor.npc .editor-container {
-    padding: var(--spacing-md);
+    padding: 0;
+  }
+
+  .vagabond.sheet.actor.npc .editor-container.compact {
+    padding: 0;
+    border: 1px solid #d1d1d1;
+    background: white;
+  }
+
+  .vagabond.sheet.actor.npc button.icon-only {
+    background: transparent;
+    color: var(--npc-border);
+    border: 1px solid #d1d1d1;
+  }
+
+  .vagabond.sheet.actor.npc button.icon-only:hover {
+    background: var(--color-accent);
+    color: var(--color-primary);
   }
 
   /* ==================== */
