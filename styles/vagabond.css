@@ -1419,10 +1419,23 @@
 
   .vagabond.sheet.actor.npc .stat-row.primary {
     column-gap: 18px;
+    justify-content: center;
   }
 
   .vagabond.sheet.actor.npc .stat-row.secondary {
     column-gap: 16px;
+  }
+
+  .vagabond.sheet.actor.npc .stat-columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px 18px;
+    align-items: start;
+  }
+
+  .vagabond.sheet.actor.npc .stat-column {
+    display: grid;
+    gap: 6px;
   }
 
   .vagabond.sheet.actor.npc .stat-block {
@@ -1451,17 +1464,14 @@
   .vagabond.sheet.actor.npc .stat-item select {
     background: transparent;
     border: 1px solid #cfcfcf;
-    padding: 2px 4px;
+    padding: 2px 2px;
     font-size: 13px;
   }
 
   .vagabond.sheet.actor.npc .stat-block input[type="number"],
-  .vagabond.sheet.actor.npc .stat-item input[type="number"] {
-    width: 52px;
-  }
-
+  .vagabond.sheet.actor.npc .stat-item input[type="number"],
   .vagabond.sheet.actor.npc input[name="system.appearing"] {
-    width: 88px;
+    width: 27px;
     text-align: center;
   }
 
@@ -1479,6 +1489,12 @@
     display: flex;
     align-items: center;
     gap: 4px;
+  }
+
+  .vagabond.sheet.actor.npc .stat-block.zone select {
+    width: auto;
+    min-width: max-content;
+    flex: 0 0 auto;
   }
 
   .vagabond.sheet.actor.npc .stat-block .hint,
@@ -1553,17 +1569,30 @@
     gap: var(--spacing-sm);
   }
 
+  /* Keep NPC notes compact but scrollable */
+  .vagabond.sheet.actor.npc .notes-section .editor-container,
+  .vagabond.sheet.actor.npc .notes-section .editor-content {
+    min-height: 0;
+    max-height: 150px;
+    overflow: auto;
+  }
+
   .vagabond.sheet.actor.npc .list-entry {
-    border: 1px solid #d1d1d1;
-    background: white;
-    padding: var(--spacing-sm);
+    border: none;
+    border-bottom: 1px dotted #c6c6c6;
+    background: transparent;
+    padding: 6px 0;
     display: flex;
     flex-direction: column;
     gap: var(--spacing-xs);
   }
 
   .vagabond.sheet.actor.npc .list-entry.compact {
-    padding: 8px;
+    padding: 6px 0;
+  }
+
+  .vagabond.sheet.actor.npc .list-entry:last-child {
+    border-bottom: none;
   }
 
   .vagabond.sheet.actor.npc .entry-top {

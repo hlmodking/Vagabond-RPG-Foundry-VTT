@@ -43,15 +43,12 @@
         <div class="stat-block hd">
           <label>{{localize "VAGABOND.NPC.HD"}}:</label>
           <input type="number" name="system.hd" value="{{system.hd}}" data-dtype="Number" min="1"/>
-          <span class="hint">({{system.hp.max}} {{localize "VAGABOND.Combat.HP"}})</span>
         </div>
 
         <div class="stat-block hp">
           <label>{{localize "VAGABOND.NPC.HitPoints"}}:</label>
           <div class="stat-value hp-line">
             <input type="number" name="system.hp.value" value="{{system.hp.value}}" data-dtype="Number" min="0"/>
-            <span class="sep">/</span>
-            <span class="max">{{system.hp.max}}</span>
           </div>
         </div>
 
@@ -59,69 +56,67 @@
           <label>{{localize "VAGABOND.NPC.Speed"}}:</label>
           <div class="stat-value speed-line">
             <input type="number" name="system.speed.base" value="{{system.speed.base}}" data-dtype="Number" min="0"/>
-            <span class="hint">'</span>
-            <input type="text" name="system.speed.note" value="{{system.speed.note}}" placeholder="(Swim 20')"/>
           </div>
-        </div>
-
-        <div class="stat-block appearing">
-          <label>{{localize "VAGABOND.NPC.Appearing"}}:</label>
-          <input type="text" name="system.appearing" value="{{system.appearing}}" placeholder="1d6"/>
         </div>
       </div>
 
-      <div class="stat-row secondary">
-        <div class="stat-block zone">
-          <label>{{localize "VAGABOND.NPC.Zone"}}:</label>
-          <select name="system.zone">
-            {{#select system.zone}}
-            {{#each config.npcZones as |label key|}}
-            <option value="{{key}}">{{localize label}}</option>
-            {{/each}}
-            {{/select}}
-          </select>
-        </div>
+      <hr class="dotted-rule"/>
 
-        <div class="stat-block morale">
-          <label>{{localize "VAGABOND.NPC.Morale"}}:</label>
-          <input type="number" name="system.morale" value="{{system.morale}}" data-dtype="Number" min="2" max="12"/>
-        </div>
+      <div class="stat-columns">
+        <div class="stat-column">
+          <div class="stat-block appearing">
+            <label>{{localize "VAGABOND.NPC.Appearing"}}:</label>
+            <input type="text" name="system.appearing" value="{{system.appearing}}" placeholder="1d6"/>
+          </div>
 
-        <div class="stat-block armor">
-          <label>{{localize "VAGABOND.NPC.Armor"}}:</label>
-          <div class="stat-value armor-line">
-            <input type="number" name="system.armor.value" value="{{system.armor.value}}" data-dtype="Number" min="0"/>
-            <select name="system.armor.type">
-              {{#select system.armor.type}}
-              <option value="none">-</option>
-              {{#each config.armorTypes as |label key|}}
+          <div class="stat-block zone">
+            <label>{{localize "VAGABOND.NPC.Zone"}}:</label>
+            <select name="system.zone">
+              {{#select system.zone}}
+              {{#each config.npcZones as |label key|}}
               <option value="{{key}}">{{localize label}}</option>
               {{/each}}
               {{/select}}
             </select>
           </div>
+
+          <div class="stat-block morale">
+            <label>{{localize "VAGABOND.NPC.Morale"}}:</label>
+            <input type="number" name="system.morale" value="{{system.morale}}" data-dtype="Number" min="2" max="12"/>
+          </div>
+
+          <div class="stat-block armor">
+            <label>{{localize "VAGABOND.NPC.Armor"}}:</label>
+            <div class="stat-value armor-line">
+              <input type="number" name="system.armor.value" value="{{system.armor.value}}" data-dtype="Number" min="0"/>
+              <select name="system.armor.type">
+                {{#select system.armor.type}}
+                <option value="none">-</option>
+                {{#each config.armorTypes as |label key|}}
+                <option value="{{key}}">{{localize label}}</option>
+                {{/each}}
+                {{/select}}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-column">
+          <div class="stat-block senses">
+            <label>{{localize "VAGABOND.NPC.Senses"}}</label>
+            <input type="text" name="system.senses" value="{{system.senses}}" placeholder="None"/>
+          </div>
+          <div class="stat-block weak">
+            <label>{{localize "VAGABOND.NPC.Weak"}}</label>
+            <input type="text" name="system.weak" value="{{system.weak}}" placeholder="None"/>
+          </div>
+          <div class="stat-block immune">
+            <label>{{localize "VAGABOND.NPC.Immune"}}</label>
+            <input type="text" name="system.immune" value="{{system.immune}}" placeholder="None"/>
+          </div>
         </div>
       </div>
     </div>
-
-    <div class="dotted-rule faint"></div>
-
-    <div class="statline muted">
-      <div class="stat-item">
-        <label>{{localize "VAGABOND.NPC.Senses"}}</label>
-        <input type="text" name="system.senses" value="{{system.senses}}" placeholder="None"/>
-      </div>
-      <div class="stat-item">
-        <label>{{localize "VAGABOND.NPC.Weak"}}</label>
-        <input type="text" name="system.weak" value="{{system.weak}}" placeholder="None"/>
-      </div>
-      <div class="stat-item">
-        <label>{{localize "VAGABOND.NPC.Immune"}}</label>
-        <input type="text" name="system.immune" value="{{system.immune}}" placeholder="None"/>
-      </div>
-    </div>
-
-    <div class="dotted-rule faint"></div>
 
     <div class="npc-section">
       <div class="section-header">
@@ -172,11 +167,11 @@
       </div>
     </div>
 
-    <div class="npc-section">
+    <div class="npc-section notes-section">
       <div class="section-header">
         <h2>{{localize "VAGABOND.NPC.Notes"}}</h2>
         {{#if editable}}
-        <button type="button" class="icon-only" data-action="toggleEditor" data-target="system.biography" title="Edit Notes">
+        <button type="button" class="icon-only editor-edit" data-action="toggleEditor" data-target="system.biography" title="Edit Notes">
           <i class="fas fa-edit"></i>
         </button>
         {{/if}}

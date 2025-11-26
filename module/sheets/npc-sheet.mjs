@@ -9,8 +9,8 @@ export class VagabondNPCSheet extends HandlebarsApplicationMixin(foundry.applica
     static DEFAULT_OPTIONS = {
         classes: ["vagabond", "sheet", "actor", "npc"],
         position: {
-            width: 600,
-            height: 700
+            width: 465,
+            height: 689
         },
         actions: {
             toggleEditor: VagabondNPCSheet._onToggleEditor,
